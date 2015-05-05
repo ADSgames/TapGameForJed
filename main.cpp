@@ -3,6 +3,7 @@
 #include<time.h>
 
 BITMAP* buffer;
+BITMAP* coin;
 
 bool close_button_pressed;
 bool mouse_pressed;
@@ -63,7 +64,7 @@ void update(){
             money-=100;
             mps+=10;
             slaves++;
-            slave_cost=slave_cost*(slave_cost/2);
+            slave_cost=slave_cost+(slave_cost/2);
         }
     }
 
@@ -89,7 +90,8 @@ void draw(){
     textprintf_ex( buffer, font, 400,60, makecol(0,0,0), -1, "Slaves: %i",slaves);
 
     textprintf_ex( buffer, font, 20,100, makecol(0,0,0), -1, "Press A to buy 1 slave: %i$ for 10 JC/S.",slave_cost);
-
+    if(!mouse_pressed)draw_sprite(buffer,coin,200,150);
+    if(mouse_pressed)stretch_sprite(buffer,coin,220,170,360,360);
     draw_sprite(screen,buffer,0,0);
 
 
@@ -120,8 +122,8 @@ void setup(){
     LOCK_FUNCTION(close_button_handler);
     set_close_button_callback(close_button_handler);
 
-   // if (!(bmp = load_bitmap("bmp.png", NULL)))
-   //   abort_on_error("Cannot find image bmp.png\nPlease check your files and try again");
+   if (!(coin = load_bitmap("images/coin.png", NULL)))
+     abort_on_error("Cannot find image coin.png\nPlease check your files and try again");
 }
 
 
