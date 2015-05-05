@@ -9,9 +9,17 @@ bool close_button_pressed;
 bool mouse_pressed;
 int money = 1;
 int mps = 0;
+int mpc = 1;
 int slaves;
 int slave_cost=100;
 int second_timer;
+
+int mines;
+int mine_cost=500;
+
+int jed_clones;
+int jed_clone_cost=5000;
+
 
 // FPS System
 volatile int ticks = 0;
@@ -60,17 +68,36 @@ void abort_on_error(const char *message){
 void update(){
     second_timer++;
     if(key[KEY_A]){
-        if(money>=100){
-            money-=100;
+        if(money>=slave_cost){
+            money-=slave_cost;
             mps+=10;
             slaves++;
             slave_cost=slave_cost+(slave_cost/2);
         }
     }
 
+    if(key[KEY_S]){
+        if(money>=mine_cost){
+            money-=mine_cost;
+            mps+=10;
+            mines++;
+            mine_cost=mine_cost+(mine_cost/2);
+        }
+    }
+
+    if(key[KEY_D]){
+        if(money>=jed_clone_cost){
+            money-=jed_clone_cost;
+            mpc=mpc*2;
+            jed_clones++;
+            jed_clone_cost=jed_clone_cost*2;
+        }
+    }
+
+
      if(mouse_b & 1 && !mouse_pressed){
         mouse_pressed=true;
-        money++;
+        money+=mpc;
 
 
      }
@@ -87,9 +114,12 @@ void draw(){
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
     textprintf_ex( buffer, font, 20,40, makecol(0,0,0), -1, "JedCoins: %i",money);
     textprintf_ex( buffer, font, 20,60, makecol(0,0,0), -1, "JC/S: %i",mps);
-    textprintf_ex( buffer, font, 400,60, makecol(0,0,0), -1, "Slaves: %i",slaves);
+    textprintf_ex( buffer, font, 500,100, makecol(0,0,0), -1, "Slaves: %i",slaves);
+     textprintf_ex( buffer, font, 500,110, makecol(0,0,0), -1, "Coin Mines: %i",mines);
 
     textprintf_ex( buffer, font, 20,100, makecol(0,0,0), -1, "Press A to buy 1 slave: %i$ for 10 JC/S.",slave_cost);
+    textprintf_ex( buffer, font, 20,110, makecol(0,0,0), -1, "Press S to buy 1 coin mine: %i$ for 25 JC/S.",mine_cost);
+    textprintf_ex( buffer, font, 20,120, makecol(0,0,0), -1, "Press D to buy 1 Jed clone: %i$ for %i JC/C.",jed_clone_cost,mpc*2);
     if(!mouse_pressed)draw_sprite(buffer,coin,200,150);
     if(mouse_pressed)stretch_sprite(buffer,coin,220,170,360,360);
     draw_sprite(screen,buffer,0,0);
