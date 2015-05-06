@@ -1,9 +1,12 @@
 #include<allegro.h>
 #include<alpng.h>
 #include<time.h>
+#include<vector>
 
 BITMAP* buffer;
 BITMAP* coin;
+
+FONT *f1,*f2,*f3,*f4,*f5,*slabo_12;
 
 bool close_button_pressed;
 bool mouse_pressed;
@@ -18,7 +21,10 @@ int mines;
 int mine_cost=500;
 
 int jed_clones;
-int jed_clone_cost=5000;
+int jed_clone_cost=1000;
+
+int forges;
+int forge_cost=1000;
 
 
 // FPS System
@@ -45,6 +51,15 @@ void close_button_handler(void){
 }
 END_OF_FUNCTION(close_button_handler)
 
+struct money_particles{
+    int x;
+    int y;
+    int value;
+    int lifespan;
+};
+
+std::vector<money_particles> money_particle;
+
 // Random number generator. Use int random(highest,lowest);
 int random(int newLowest, int newHighest)
 {
@@ -53,7 +68,15 @@ int random(int newLowest, int newHighest)
   int randomNumber = lowest+int(range*rand()/(RAND_MAX + 1.0));
   return randomNumber;
 }
+void create_money_particle(int newX, int newY, int newValue){
+    money_particles newMoneyParticle;
+    newMoneyParticle.x = newX;
+    newMoneyParticle.y = newY;
+    newMoneyParticle.value = newValue;
 
+    money_particle.push_back(newMoneyParticle);
+
+}
 
 //A function to streamline error reporting in file loading
 void abort_on_error(const char *message){
@@ -66,13 +89,24 @@ void abort_on_error(const char *message){
 }
 
 void update(){
+
+    for( int i = 0; i <money_particle.size(); i++){
+        //money_particle[i].lifespan++;
+       money_particle[i].y--;
+        if(money_particle[i].y<0){
+            money_particle.erase(money_particle.begin()+i);
+        }
+    }
+
     second_timer++;
+    if(key[KEY_I])money+=10;
+
     if(key[KEY_A]){
         if(money>=slave_cost){
             money-=slave_cost;
             mps+=10;
             slaves++;
-            slave_cost=slave_cost+(slave_cost/2);
+            slave_cost=slave_cost+(slave_cost/4);
         }
     }
 
@@ -81,9 +115,11 @@ void update(){
             money-=mine_cost;
             mps+=10;
             mines++;
-            mine_cost=mine_cost+(mine_cost/2);
+            mine_cost=mine_cost+(mine_cost/4);
         }
     }
+
+
 
     if(key[KEY_D]){
         if(money>=jed_clone_cost){
@@ -94,10 +130,22 @@ void update(){
         }
     }
 
+      if(key[KEY_F]){
+        if(money>=forge_cost){
+            money-=forge_cost;
+            mps+=100;
+            forges++;
+            forge_cost=forge_cost+(forge_cost/4);
+        }
+    }
+
+
 
      if(mouse_b & 1 && !mouse_pressed){
         mouse_pressed=true;
         money+=mpc;
+        create_money_particle(random(200,600),random(150,500),mpc);
+
 
 
      }
@@ -106,22 +154,42 @@ void update(){
     if(second_timer>60){
             second_timer=0;
         money+=mps;
+        if(mps!=0)create_money_particle(random(200,600),random(150,500),mps);
     }
 }
 
 void draw(){
 
+
+
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
     textprintf_ex( buffer, font, 20,40, makecol(0,0,0), -1, "JedCoins: %i",money);
     textprintf_ex( buffer, font, 20,60, makecol(0,0,0), -1, "JC/S: %i",mps);
+    textprintf_ex( buffer, font, 20,70, makecol(0,0,0), -1, "JC/C: %i",mpc);
     textprintf_ex( buffer, font, 500,100, makecol(0,0,0), -1, "Slaves: %i",slaves);
-     textprintf_ex( buffer, font, 500,110, makecol(0,0,0), -1, "Coin Mines: %i",mines);
+    textprintf_ex( buffer, font, 500,110, makecol(0,0,0), -1, "Jedcoin Mines: %i",mines);
+    textprintf_ex( buffer, font, 500,120, makecol(0,0,0), -1, "Jed Clones %i",jed_clones);
+    textprintf_ex( buffer, font, 500,130, makecol(0,0,0), -1, "Jedcoin Forges %i",forges);
+
+
 
     textprintf_ex( buffer, font, 20,100, makecol(0,0,0), -1, "Press A to buy 1 slave: %i$ for 10 JC/S.",slave_cost);
     textprintf_ex( buffer, font, 20,110, makecol(0,0,0), -1, "Press S to buy 1 coin mine: %i$ for 25 JC/S.",mine_cost);
     textprintf_ex( buffer, font, 20,120, makecol(0,0,0), -1, "Press D to buy 1 Jed clone: %i$ for %i JC/C.",jed_clone_cost,mpc*2);
+    textprintf_ex( buffer, font, 20,130, makecol(0,0,0), -1, "Press F to buy 1 Jedcoin Mine: %i$ for 100 JC/C.",forge_cost);
+
+
+
+
     if(!mouse_pressed)draw_sprite(buffer,coin,200,150);
     if(mouse_pressed)stretch_sprite(buffer,coin,220,170,360,360);
+
+    for( int i = 0; i <money_particle.size(); i++){
+
+        textprintf_ex( buffer, font, money_particle[i].x,money_particle[i].y, makecol(0,0,0), -1, "$%i",money_particle[i].value);
+    }
+
+
     draw_sprite(screen,buffer,0,0);
 
 
@@ -135,6 +203,21 @@ void draw(){
 
 void setup(){
     buffer=create_bitmap(800,600);
+
+
+     // Load fonts
+  f1 = load_font("fonts/slabo_12.pcx", NULL, NULL);
+  f2 = extract_font_range(f1, ' ', 'A'-1);
+  f3 = extract_font_range(f1, 'A', 'Z');
+  f4 = extract_font_range(f1, 'Z'+1, 'z');
+  slabo_12 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+
+  // Destroy temporary fonts
+  destroy_font(f1);
+  destroy_font(f2);
+  destroy_font(f3);
+  destroy_font(f4);
+  destroy_font(f5);
 
 
     srand(time(NULL));
