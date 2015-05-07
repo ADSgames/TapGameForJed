@@ -6,6 +6,8 @@
 BITMAP* buffer;
 BITMAP* coin;
 
+BITMAP* slave;
+
 FONT *f1,*f2,*f3,*f4,*f5,*slabo_12;
 
 bool close_button_pressed;
@@ -26,6 +28,8 @@ int jed_clone_cost=1000;
 int forges;
 int forge_cost=1000;
 
+int villages;
+int village_cost=12500;
 
 // FPS System
 volatile int ticks = 0;
@@ -139,6 +143,15 @@ void update(){
         }
     }
 
+    if(key[KEY_G]){
+        if(money>=village_cost){
+            money-=village_cost;
+            mps+=1000;
+            villages++;
+            village_cost=village_cost+(village_cost/4);
+        }
+    }
+
 
 
      if(mouse_b & 1 && !mouse_pressed){
@@ -166,10 +179,16 @@ void draw(){
     textprintf_ex( buffer, font, 20,40, makecol(0,0,0), -1, "JedCoins: %i",money);
     textprintf_ex( buffer, font, 20,60, makecol(0,0,0), -1, "JC/S: %i",mps);
     textprintf_ex( buffer, font, 20,70, makecol(0,0,0), -1, "JC/C: %i",mpc);
-    textprintf_ex( buffer, font, 500,100, makecol(0,0,0), -1, "Slaves: %i",slaves);
+    textprintf_ex( buffer, font, 500,10, makecol(0,0,0), -1, "Slaves: %i",slaves);
+    for( int i = 0; i <slaves; i++){
+        draw_sprite(buffer,slave,500+i*20,20);
+    }
+
+
     textprintf_ex( buffer, font, 500,110, makecol(0,0,0), -1, "Jedcoin Mines: %i",mines);
     textprintf_ex( buffer, font, 500,120, makecol(0,0,0), -1, "Jed Clones %i",jed_clones);
     textprintf_ex( buffer, font, 500,130, makecol(0,0,0), -1, "Jedcoin Forges %i",forges);
+    textprintf_ex( buffer, font, 500,140, makecol(0,0,0), -1, "Villages %i",villages);
 
 
 
@@ -177,7 +196,7 @@ void draw(){
     textprintf_ex( buffer, font, 20,110, makecol(0,0,0), -1, "Press S to buy 1 coin mine: %i$ for 25 JC/S.",mine_cost);
     textprintf_ex( buffer, font, 20,120, makecol(0,0,0), -1, "Press D to buy 1 Jed clone: %i$ for %i JC/C.",jed_clone_cost,mpc*2);
     textprintf_ex( buffer, font, 20,130, makecol(0,0,0), -1, "Press F to buy 1 Jedcoin Mine: %i$ for 100 JC/C.",forge_cost);
-
+    textprintf_ex( buffer, font, 20,140, makecol(0,0,0), -1, "Press G to buy 1 Jedcoin Mine: %i$ for 1000 JC/C.",village_cost);
 
 
 
@@ -236,7 +255,10 @@ void setup(){
     set_close_button_callback(close_button_handler);
 
    if (!(coin = load_bitmap("images/coin.png", NULL)))
-     abort_on_error("Cannot find image coin.png\nPlease check your files and try again");
+     abort_on_error("Cannot find image images/coin.png\nPlease check your files and try again");
+
+    if (!(slave = load_bitmap("images/slave.png", NULL)))
+     abort_on_error("Cannot find image images/slaves.png\nPlease check your files and try again");
 }
 
 
