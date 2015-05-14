@@ -2,6 +2,7 @@
 #include<alpng.h>
 #include<time.h>
 #include<vector>
+#include<cmath>
 
 BITMAP* buffer;
 BITMAP* coin;
@@ -133,7 +134,7 @@ void update(){
             step=0;
         if(money>=slave_cost){
             money-=slave_cost;
-            mps+=10;
+            mps+=2;
             slaves++;
             slave_cost=slave_cost+(slave_cost/4);
         }
@@ -244,7 +245,7 @@ void draw(){
     }
     rect(buffer,450,5,495,45,makecol(0,0,0));
     textprintf_right_ex( buffer, slabo_10, 445,15, makecol(0,0,0), -1, "%i",slave_cost);
-
+    textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,5, makecol(0,0,0), -1, "2 JC/S");
 
 
     //Mines
@@ -256,10 +257,11 @@ void draw(){
     rect(buffer,450,45,495,85,makecol(0,0,0));
 
     textprintf_right_ex( buffer, slabo_10, 445,55, makecol(0,0,0), -1, "%i",mine_cost);
+    textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,45, makecol(0,0,0), -1, "10 JC/S");
 
 
-    //Forges
-    if(money<forge_cost)rectfill(buffer,450,85,495,125,makecol(255,0,0));
+    //Jed Clones
+    if(money<jed_clone_cost)rectfill(buffer,450,85,495,125,makecol(255,0,0));
     else{
       rectfill(buffer,450,85,495,125,makecol(0,255,0));
       textprintf_ex( buffer, slabo_10, 460,95, makecol(0,0,0), -1, "Buy");
@@ -267,10 +269,12 @@ void draw(){
      rect(buffer,450,85,495,125,makecol(0,0,0));
 
      textprintf_right_ex( buffer, slabo_10, 445,95, makecol(0,0,0), -1, "%i",jed_clone_cost);
+    textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,85, makecol(0,0,0), -1, "%4.0f JC/C",pow(2.0,jed_clones+1));
 
 
-     //Jed Clones
-     if(money<jed_clone_cost)rectfill(buffer,450,125,495,165,makecol(255,0,0));
+
+     //Forges
+     if(money<forge_cost)rectfill(buffer,450,125,495,165,makecol(255,0,0));
      else{
         rectfill(buffer,450,125,495,165,makecol(0,255,0));
         textprintf_ex( buffer, slabo_10, 460,135, makecol(0,0,0), -1, "Buy");
@@ -301,9 +305,11 @@ void draw(){
       rect(buffer,450,205,495,245,makecol(0,0,0));
 
       textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "%i",planet_cost);
+      textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "");
 
 
    textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "Slaves: %i",slaves);
+
     for( int i = 0; i <slaves; i++){
         draw_sprite(buffer,slave,500+i*20,20);
     }
@@ -353,7 +359,7 @@ void draw(){
 
     for( int i = 0; i <money_particle.size(); i++){
 
-        textprintf_ex( buffer, font, money_particle[i].x,money_particle[i].y, makecol(0,0,0), -1, "$%i",money_particle[i].value);
+        textprintf_ex( buffer, slabo_10, money_particle[i].x,money_particle[i].y, makecol(0,100,0), -1, "$%i",money_particle[i].value);
     }
 
     draw_sprite(buffer,cursor,mouse_x,mouse_y);
