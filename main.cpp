@@ -194,11 +194,11 @@ void update(){
 
 
 
-     if(location_clicked(30,430,170,570) && !mouse_pressed){
+     if(location_clicked(10,410,190,600) && !mouse_pressed){
         mouse_pressed=true;
         money+=mpc;
         click++;
-        create_money_particle(random(30,430),random(150,500),mpc);
+        create_money_particle(random(30,370),random(230,500),mpc);
 
 
 
@@ -213,7 +213,7 @@ void update(){
             second_timer=0;
         money+=mps;
 
-        if(mps!=0)create_money_particle(random(30,430),random(150,500),mps);
+        if(mps!=0)create_money_particle(random(30,370),random(230,500),mps);
     }
 }
 
@@ -358,8 +358,8 @@ void draw(){
 
 
 
-    if(!mouse_pressed)draw_sprite(buffer,coin,30,170);
-    if(mouse_pressed)stretch_sprite(buffer,coin,50,190,360,360);
+    if(!mouse_pressed)draw_sprite(buffer,coin,10,190);
+    if(mouse_pressed)stretch_sprite(buffer,coin,30,210,360,360);
 
     for( int i = 0; i <money_particle.size(); i++){
 
