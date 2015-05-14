@@ -173,10 +173,10 @@ void update(){
     }
 
     if((key[KEY_G] || location_clicked(450,495,165,205)) && step>10){
-            step=0;
+        step=0;
         if(money>=village_cost){
             money-=village_cost;
-            mps+=1000;
+            mps+=2000;
             villages++;
             village_cost=village_cost+(village_cost/4);
         }
@@ -282,6 +282,7 @@ void draw(){
      rect(buffer,450,125,495,165,makecol(0,0,0));
 
      textprintf_right_ex( buffer, slabo_10, 445,135, makecol(0,0,0), -1, "%i",forge_cost);
+     textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,125, makecol(0,0,0), -1, "100 JC/S");
 
 
       //Villages
@@ -293,6 +294,7 @@ void draw(){
      rect(buffer,450,165,495,205,makecol(0,0,0));
 
      textprintf_right_ex( buffer, slabo_10, 445,175, makecol(0,0,0), -1, "%i",village_cost);
+     textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,165, makecol(0,0,0), -1, "2000 JC/S");
 
 
 
@@ -306,6 +308,8 @@ void draw(){
 
       textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "%i",planet_cost);
       textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "");
+
+      textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,205, makecol(0,0,0), -1, "50000 JC/S");
 
 
    textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "Slaves: %i",slaves);
