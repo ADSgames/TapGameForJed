@@ -16,7 +16,8 @@ BITMAP* planet;
 BITMAP* cursor;
 
 
-FONT *f1,*f2,*f3,*f4,*f5,*slabo_20, *slabo_8;
+FONT *f1,*f2,*f3,*f4,*f5;
+FONT *slabo_26, *slabo_20, *slabo_10;
 
 bool close_button_pressed;
 bool mouse_pressed;
@@ -221,10 +222,10 @@ void draw(){
 
 
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
-    textprintf_ex( buffer, slabo_20, 5,5, makecol(0,0,0), -1, "JedCoins: %i",money);
-    textprintf_ex( buffer, font, 20,60, makecol(0,0,0), -1, "JC/S: %i",mps);
-    textprintf_ex( buffer, font, 20,70, makecol(0,0,0), -1, "JC/C: %i",mpc);
-    textprintf_ex( buffer, font, 20,80, makecol(0,0,0), -1, "Clicks: %i",click);
+    textprintf_ex( buffer, slabo_26, 5,5, makecol(0,0,0), -1, "JedCoins: %i",money);
+    textprintf_ex( buffer, slabo_20, 5,40, makecol(0,0,0), -1, "JC/S: %i",mps);
+    textprintf_ex( buffer, slabo_20, 5,70, makecol(0,0,0), -1, "JC/C: %i",mpc);
+    //textprintf_ex( buffer, font, 20,80, makecol(0,0,0), -1, "Clicks: %i",click);
 
 
 
@@ -239,10 +240,10 @@ void draw(){
     if(money<slave_cost)rectfill(buffer,450,5,495,45,makecol(255,0,0));
     else{
       rectfill(buffer,450,5,495,45,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_8, 460,15, makecol(0,0,0), -1, "Buy");
+      textprintf_ex( buffer, slabo_10, 460,15, makecol(0,0,0), -1, "Buy");
     }
     rect(buffer,450,5,495,45,makecol(0,0,0));
-    textprintf_right_ex( buffer, slabo_8, 445,15, makecol(0,0,0), -1, "%i",slave_cost);
+    textprintf_right_ex( buffer, slabo_10, 445,15, makecol(0,0,0), -1, "%i",slave_cost);
 
 
 
@@ -250,44 +251,44 @@ void draw(){
     if(money<mine_cost)rectfill(buffer,450,45,495,85,makecol(255,0,0));
     else{
       rectfill(buffer,450,45,495,85,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_8, 460,55, makecol(0,0,0), -1, "Buy");
+      textprintf_ex( buffer, slabo_10, 460,55, makecol(0,0,0), -1, "Buy");
     }
     rect(buffer,450,45,495,85,makecol(0,0,0));
 
-    textprintf_right_ex( buffer, slabo_8, 445,55, makecol(0,0,0), -1, "%i",mine_cost);
+    textprintf_right_ex( buffer, slabo_10, 445,55, makecol(0,0,0), -1, "%i",mine_cost);
 
 
     //Forges
     if(money<forge_cost)rectfill(buffer,450,85,495,125,makecol(255,0,0));
     else{
       rectfill(buffer,450,85,495,125,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_8, 460,95, makecol(0,0,0), -1, "Buy");
+      textprintf_ex( buffer, slabo_10, 460,95, makecol(0,0,0), -1, "Buy");
     }
      rect(buffer,450,85,495,125,makecol(0,0,0));
 
-     textprintf_right_ex( buffer, slabo_8, 445,95, makecol(0,0,0), -1, "%i",jed_clone_cost);
+     textprintf_right_ex( buffer, slabo_10, 445,95, makecol(0,0,0), -1, "%i",jed_clone_cost);
 
 
      //Jed Clones
      if(money<jed_clone_cost)rectfill(buffer,450,125,495,165,makecol(255,0,0));
      else{
         rectfill(buffer,450,125,495,165,makecol(0,255,0));
-        textprintf_ex( buffer, slabo_8, 460,135, makecol(0,0,0), -1, "Buy");
+        textprintf_ex( buffer, slabo_10, 460,135, makecol(0,0,0), -1, "Buy");
      }
      rect(buffer,450,125,495,165,makecol(0,0,0));
 
-     textprintf_right_ex( buffer, slabo_8, 445,135, makecol(0,0,0), -1, "%i",forge_cost);
+     textprintf_right_ex( buffer, slabo_10, 445,135, makecol(0,0,0), -1, "%i",forge_cost);
 
 
       //Villages
      if(money<village_cost)rectfill(buffer,450,165,495,205,makecol(255,0,0));
      else{
       rectfill(buffer,450,165,495,205,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_8, 460,175, makecol(0,0,0), -1, "Buy");
+      textprintf_ex( buffer, slabo_10, 460,175, makecol(0,0,0), -1, "Buy");
      }
      rect(buffer,450,165,495,205,makecol(0,0,0));
 
-     textprintf_right_ex( buffer, slabo_8, 445,175, makecol(0,0,0), -1, "%i",village_cost);
+     textprintf_right_ex( buffer, slabo_10, 445,175, makecol(0,0,0), -1, "%i",village_cost);
 
 
 
@@ -295,46 +296,46 @@ void draw(){
       if(money<planet_cost)rectfill(buffer,450,205,495,245,makecol(255,0,0));
       else{
         rectfill(buffer,450,205,495,245,makecol(0,255,0));
-        textprintf_ex( buffer, slabo_8, 460,215, makecol(0,0,0), -1, "Buy");
+        textprintf_ex( buffer, slabo_10, 460,215, makecol(0,0,0), -1, "Buy");
       }
       rect(buffer,450,205,495,245,makecol(0,0,0));
 
-      textprintf_right_ex( buffer, slabo_8, 445,215, makecol(0,0,0), -1, "%i",planet_cost);
+      textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "%i",planet_cost);
 
 
-   textprintf_ex( buffer, slabo_8, 500,5, makecol(0,0,0), -1, "Slaves: %i",slaves);
+   textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "Slaves: %i",slaves);
     for( int i = 0; i <slaves; i++){
         draw_sprite(buffer,slave,500+i*20,20);
     }
 
 
-    textprintf_ex( buffer, slabo_8, 500,45, makecol(0,0,0), -1, "Jedcoin mines: %i",mines);
+    textprintf_ex( buffer, slabo_10, 500,45, makecol(0,0,0), -1, "Jedcoin mines: %i",mines);
 
     for( int i = 0; i <mines; i++){
         draw_sprite(buffer,mine,500+i*27,60);
     }
 
 
-    textprintf_ex( buffer, slabo_8, 500,85, makecol(0,0,0), -1, "Jed clones: %i",jed_clones);
+    textprintf_ex( buffer, slabo_10, 500,85, makecol(0,0,0), -1, "Jed clones: %i",jed_clones);
 
     for( int i = 0; i <jed_clones; i++){
         draw_sprite(buffer,jedclone,500+i*15,100);
     }
 
-    textprintf_ex( buffer, slabo_8, 500,125, makecol(0,0,0), -1, "Jedcoin forges: %i",forges);
+    textprintf_ex( buffer, slabo_10, 500,125, makecol(0,0,0), -1, "Jedcoin forges: %i",forges);
 
     for( int i = 0; i <forges; i++){
         draw_sprite(buffer,forge,500+i*25,140);
     }
 
-    textprintf_ex( buffer, slabo_8, 500,165, makecol(0,0,0), -1, "Villages: %i",villages);
+    textprintf_ex( buffer, slabo_10, 500,165, makecol(0,0,0), -1, "Villages: %i",villages);
 
      for( int i = 0; i <villages; i++){
         draw_sprite(buffer,village,500+i*25,180);
     }
 
 
-    textprintf_ex( buffer, slabo_8, 500,205, makecol(0,0,0), -1, "Planets: %i",planets);
+    textprintf_ex( buffer, slabo_10, 500,205, makecol(0,0,0), -1, "Planets: %i",planets);
 
      for( int i = 0; i <planets; i++){
         draw_sprite(buffer,planet,500+i*25,220);
@@ -379,11 +380,18 @@ void setup(){
   f4 = extract_font_range(f1, 'Z'+1, 'z');
   slabo_20 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
 
-  f1 = load_font("fonts/slabo_8.pcx", NULL, NULL);
+  f1 = load_font("fonts/slabo_10.pcx", NULL, NULL);
   f2 = extract_font_range(f1, ' ', 'A'-1);
   f3 = extract_font_range(f1, 'A', 'Z');
   f4 = extract_font_range(f1, 'Z'+1, 'z');
-  slabo_8 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+  slabo_10 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+
+  f1 = load_font("fonts/slabo_26.pcx", NULL, NULL);
+  f2 = extract_font_range(f1, ' ', 'A'-1);
+  f3 = extract_font_range(f1, 'A', 'Z');
+  f4 = extract_font_range(f1, 'Z'+1, 'z');
+  slabo_26 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+
 
 
   // Destroy temporary fonts
