@@ -1,14 +1,15 @@
 #include "item.h"
-#include "allegro.h"
 
 item::item()
 {
     //ctor
 }
-
-void item::draw( BITMAP *tempImage){
+item::draw(){
+ int i = 0;
+ i++;
 
 }
+
 
 item::~item()
 {

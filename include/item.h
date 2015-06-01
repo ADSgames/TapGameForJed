@@ -5,10 +5,9 @@
 class item
 {
     public:
+        void draw();
         item();
         virtual ~item();
-
-        void draw( BITMAP *tempImage);
     protected:
     private:
 };
