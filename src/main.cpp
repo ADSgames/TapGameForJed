@@ -114,6 +114,18 @@ void abort_on_error(const char *message){
 	 exit(-1);
 }
 
+class item {
+    int width, height;
+  public:
+    void set_values (int,int);
+    int area() {return width*height;}
+};
+
+void item::set_values (int x, int y) {
+  width = x;
+  height = y;
+}
+
 void update(){
 
 
