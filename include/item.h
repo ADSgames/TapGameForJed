@@ -9,6 +9,7 @@ class item
   public:
     item();
     void set_image(std::string newImage);
+    void draw(BITMAP* tempBitmap);
     virtual ~item();
 
     BITMAP *image;
