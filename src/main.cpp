@@ -115,7 +115,7 @@ void abort_on_error(const char *message){
 	 allegro_message("%s.\n %s\n", message, allegro_error);
 	 exit(-1);
 }
-item slave;
+item slave(400,40);
 
 
 void update(){
@@ -371,8 +371,10 @@ void draw(){
     }
 
     draw_sprite(buffer,cursor,mouse_x,mouse_y);
-
+    slave.draw(buffer);
     draw_sprite(screen,buffer,0,0);
+
+
 
 
 }

@@ -7,13 +7,14 @@
 class item
 {
   public:
-    item();
+    item(int newX, int newY);
     void set_image(std::string newImage);
     void draw(BITMAP* tempBitmap);
     virtual ~item();
 
     BITMAP *image;
-
+    int x;
+    int y;
   protected:
   private:
 };

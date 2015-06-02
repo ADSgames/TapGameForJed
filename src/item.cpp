@@ -1,14 +1,15 @@
 #include "item.h"
 
-item::item()
+item::item(int newX, int newY)
 {
-  //ctor
+  x=newX;
+  y=newY;
 }
 void item::set_image(std::string newImage){
   image = load_bitmap( newImage.c_str(), NULL);
 }
 void item::draw(BITMAP* tempBitmap){
-    draw_sprite(tempBitmap,image,300,20);
+    draw_sprite(tempBitmap,image,x,y);
 
 }
 
