@@ -1,7 +1,7 @@
 #include "item.h"
 #include "globals.h"
 
-item::item(int newX, int newY, bool newType, int newPrice, int newValue)
+item::item(int newX, int newY, bool newType, int newPrice, int newValue, std::string newName)
 {
   x=newX;
   y=newY;

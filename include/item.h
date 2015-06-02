@@ -10,12 +10,14 @@
 class item
 {
   public:
-    item(int newX, int newY, bool newType, int newPrice, int newValue);
+    item(int newX, int newY, bool newType, int newPrice, int newValue, std::string newName);
     void set_image(std::string newImage);
     void draw(BITMAP* tempBitmap, FONT* newFont);
     virtual ~item();
 
     bool check_click();
+
+    std::string name;
 
     BITMAP *image;
     int x;
