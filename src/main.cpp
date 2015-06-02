@@ -5,6 +5,7 @@
 #include<cmath>
 
 #include "item.h"
+#include "globals.h"
 
 BITMAP* buffer;
 BITMAP* coin;
@@ -117,13 +118,13 @@ void abort_on_error(const char *message){
 }
 
 //Declare the items
-item slave(450,500,COINS_PER_CLICK,100,2);
+item slave(450,500,COINS_PER_CLICK,100,2,"Slave");
 
 
 void update(){
 
 
-
+    slave.check_click();
     step++;
 
     for( int i = 0; i <money_particle.size(); i++){
@@ -243,7 +244,7 @@ void draw(){
     rect(buffer,495,165,799,205,makecol(0,0,0));
     rect(buffer,495,205,799,245,makecol(0,0,0));
 
-
+    slave.draw(buffer,slabo_10);
 
     //Mines
     if(money<mine_cost)rectfill(buffer,450,45,495,85,makecol(255,0,0));
@@ -311,9 +312,7 @@ void draw(){
 
    textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "slave_images: %i",slave_images);
 
-    for( int i = 0; i <slave_images; i++){
-        draw_sprite(buffer,slave_image,500+i*20,20);
-    }
+
 
 
     textprintf_ex( buffer, slabo_10, 500,45, makecol(0,0,0), -1, "Jedcoin mines: %i",mines);
@@ -364,7 +363,7 @@ void draw(){
     }
 
     draw_sprite(buffer,cursor,mouse_x,mouse_y);
-    slave.draw(buffer,slabo_10);
+
     draw_sprite(screen,buffer,0,0);
 
 

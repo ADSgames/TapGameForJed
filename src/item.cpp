@@ -25,6 +25,21 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
 
     textprintf_right_ex( tempBitmap, newFont, x-5,y+10, makecol(0,0,0), -1, "%i",price);
     textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,0,0), -1, "%i JC/S",value);
+    for( int i = 0; i <amount; i++){
+         draw_sprite(tempBitmap,image,x+50+(i*20),y+15);
+    }
+
+
+}
+
+bool item::check_click(){
+    if(location_clicked(x,x+45,y,y+40)){
+        if(money>=price){
+            money-=price;
+            amount++;
+        }
+    }
+
 
 }
 

@@ -15,10 +15,14 @@ class item
     void draw(BITMAP* tempBitmap, FONT* newFont);
     virtual ~item();
 
+    bool check_click();
+
     BITMAP *image;
     int x;
     int y;
     int value;
+
+    int amount;
 
     int price;
     bool type;
