@@ -10,43 +10,19 @@
 BITMAP* buffer;
 BITMAP* coin;
 
-BITMAP* slave_image;
-BITMAP* mine;
-BITMAP* jedclone;
-BITMAP* forge;
-BITMAP* village;
-BITMAP* planet;
-
 BITMAP* cursor;
-
 
 FONT *f1,*f2,*f3,*f4,*f5;
 FONT *slabo_26, *slabo_20, *slabo_10;
 
 bool close_button_pressed;
 bool mouse_pressed;
+
 int money = 0;
 int money_per_second=0;
 int money_per_click=1;
-int slave_images;
-int slave_image_cost=100;
 int second_timer;
 int click;
-
-int mines;
-int mine_cost=500;
-
-int jed_clones;
-int jed_clone_cost=1000;
-
-int forges;
-int forge_cost=1000;
-
-int villages;
-int village_cost=12500;
-
-int planets;
-int planet_cost=1000000;
 
 int step;
 
@@ -117,13 +93,27 @@ void abort_on_error(const char *message){
 }
 
 //Declare the items
-item slave(450,500,COINS_PER_SECOND,100,2,"Slave");
+item slave(450,5,COINS_PER_SECOND,100,2,"Slave");
+item mine(450,45,COINS_PER_SECOND,500,25,"JedCoin Mine");
+item clone(450,85,COINS_PER_CLICK,100,3,"Jed Clone");
+item forge(450,125,COINS_PER_SECOND,1500,100,"JedCoin Forge");
+item village(450,165,COINS_PER_SECOND,12500,2000,"Village");
+item planet(450,205,COINS_PER_SECOND,1000000,50000,"Planet");
+
+
+
 
 
 void update(){
 
 
     slave.update();
+    mine.update();
+    clone.update();
+    forge.update();
+    village.update();
+    planet.update();
+
     step++;
 
     for( int i = 0; i <money_particle.size(); i++){
@@ -136,71 +126,7 @@ void update(){
     second_timer++;
     if(key[KEY_I])money+=100000;
 
-    if((key[KEY_A] || location_clicked(450,495,5,45))  && step>10){
-            step=0;
-        if(money>=slave_image_cost){
-            money-=slave_image_cost;
-            money_per_second+=2;
-            slave_images++;
-            slave_image_cost=slave_image_cost+(slave_image_cost/4);
-        }
-    }
-
-    if((key[KEY_S] || location_clicked(450,495,45,85)) && step>10){
-            step=0;
-        if(money>=mine_cost){
-            money-=mine_cost;
-            money_per_second+=25;
-            mines++;
-            mine_cost=mine_cost+(mine_cost/4);
-        }
-    }
-
-
-
-    if((key[KEY_D] || location_clicked(450,495,85,125)) && step>10){
-            step=0;
-        if(money>=jed_clone_cost){
-            money-=jed_clone_cost;
-            money_per_click=money_per_click*2;
-            jed_clones++;
-            jed_clone_cost=jed_clone_cost*2;
-        }
-    }
-
-      if((key[KEY_F] || location_clicked(450,495,125,165)) && step>10){
-            step=0;
-        if(money>=forge_cost){
-            money-=forge_cost;
-            money_per_second+=100;
-            forges++;
-            forge_cost=forge_cost+(forge_cost/4);
-        }
-    }
-
-    if((key[KEY_G] || location_clicked(450,495,165,205)) && step>10){
-        step=0;
-        if(money>=village_cost){
-            money-=village_cost;
-            money_per_second+=2000;
-            villages++;
-            village_cost=village_cost+(village_cost/4);
-        }
-    }
-
-    if((key[KEY_H] || location_clicked(450,495,205,245)) && step>10){
-            step=0;
-        if(money>=planet_cost){
-            money-=planet_cost;
-            money_per_second+=50000;
-            planets++;
-            planet_cost=planet_cost+(planet_cost/4);
-        }
-    }
-
-
-
-     if(location_clicked(10,410,190,600) && !mouse_pressed){
+    if(location_clicked(10,410,190,600) && !mouse_pressed){
         mouse_pressed=true;
         money+=money_per_click;
         click++;
@@ -235,121 +161,12 @@ void draw(){
     //textprintf_ex( buffer, font, 20,80, makecol(0,0,0), -1, "Clicks: %i",click);
 
 
-
-    rect(buffer,495,45,799,85,makecol(0,0,0));
-    rect(buffer,495,85,799,125,makecol(0,0,0));
-    rect(buffer,495,125,799,165,makecol(0,0,0));
-    rect(buffer,495,165,799,205,makecol(0,0,0));
-    rect(buffer,495,205,799,245,makecol(0,0,0));
-
     slave.draw(buffer,slabo_10);
-
-    //Mines
-    if(money<mine_cost)rectfill(buffer,450,45,495,85,makecol(255,0,0));
-    else{
-      rectfill(buffer,450,45,495,85,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_10, 460,55, makecol(0,0,0), -1, "Buy");
-    }
-    rect(buffer,450,45,495,85,makecol(0,0,0));
-
-    textprintf_right_ex( buffer, slabo_10, 445,55, makecol(0,0,0), -1, "%i",mine_cost);
-    textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,45, makecol(0,0,0), -1, "10 JC/S");
-
-
-    //Jed Clones
-    if(money<jed_clone_cost)rectfill(buffer,450,85,495,125,makecol(255,0,0));
-    else{
-      rectfill(buffer,450,85,495,125,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_10, 460,95, makecol(0,0,0), -1, "Buy");
-    }
-     rect(buffer,450,85,495,125,makecol(0,0,0));
-
-     textprintf_right_ex( buffer, slabo_10, 445,95, makecol(0,0,0), -1, "%i",jed_clone_cost);
-    textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,85, makecol(0,0,0), -1, "%4.0f JC/C",pow(2.0,jed_clones+1));
-
-
-
-     //Forges
-     if(money<forge_cost)rectfill(buffer,450,125,495,165,makecol(255,0,0));
-     else{
-        rectfill(buffer,450,125,495,165,makecol(0,255,0));
-        textprintf_ex( buffer, slabo_10, 460,135, makecol(0,0,0), -1, "Buy");
-     }
-     rect(buffer,450,125,495,165,makecol(0,0,0));
-
-     textprintf_right_ex( buffer, slabo_10, 445,135, makecol(0,0,0), -1, "%i",forge_cost);
-     textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,125, makecol(0,0,0), -1, "100 JC/S");
-
-
-      //Villages
-     if(money<village_cost)rectfill(buffer,450,165,495,205,makecol(255,0,0));
-     else{
-      rectfill(buffer,450,165,495,205,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_10, 460,175, makecol(0,0,0), -1, "Buy");
-     }
-     rect(buffer,450,165,495,205,makecol(0,0,0));
-
-     textprintf_right_ex( buffer, slabo_10, 445,175, makecol(0,0,0), -1, "%i",village_cost);
-     textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,165, makecol(0,0,0), -1, "2000 JC/S");
-
-
-
-      //Planets
-      if(money<planet_cost)rectfill(buffer,450,205,495,245,makecol(255,0,0));
-      else{
-        rectfill(buffer,450,205,495,245,makecol(0,255,0));
-        textprintf_ex( buffer, slabo_10, 460,215, makecol(0,0,0), -1, "Buy");
-      }
-      rect(buffer,450,205,495,245,makecol(0,0,0));
-
-      textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "%i",planet_cost);
-      textprintf_right_ex( buffer, slabo_10, 445,215, makecol(0,0,0), -1, "");
-
-      textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,205, makecol(0,0,0), -1, "50000 JC/S");
-
-
-
-
-
-
-
-    textprintf_ex( buffer, slabo_10, 500,45, makecol(0,0,0), -1, "Jedcoin mines: %i",mines);
-
-    for( int i = 0; i <mines; i++){
-        draw_sprite(buffer,mine,500+i*27,60);
-    }
-
-
-    textprintf_ex( buffer, slabo_10, 500,85, makecol(0,0,0), -1, "Jed clones: %i",jed_clones);
-
-    for( int i = 0; i <jed_clones; i++){
-        draw_sprite(buffer,jedclone,500+i*15,100);
-    }
-
-    textprintf_ex( buffer, slabo_10, 500,125, makecol(0,0,0), -1, "Jedcoin forges: %i",forges);
-
-    for( int i = 0; i <forges; i++){
-        draw_sprite(buffer,forge,500+i*25,140);
-    }
-
-    textprintf_ex( buffer, slabo_10, 500,165, makecol(0,0,0), -1, "Villages: %i",villages);
-
-     for( int i = 0; i <villages; i++){
-        draw_sprite(buffer,village,500+i*25,180);
-    }
-
-
-    textprintf_ex( buffer, slabo_10, 500,205, makecol(0,0,0), -1, "Planets: %i",planets);
-
-     for( int i = 0; i <planets; i++){
-        draw_sprite(buffer,planet,500+i*25,220);
-    }
-
-
-
-
-
-
+    mine.draw(buffer,slabo_10);
+    clone.draw(buffer,slabo_10);
+    forge.draw(buffer,slabo_10);
+    village.draw(buffer,slabo_10);
+    planet.draw(buffer,slabo_10);
 
 
     if(!mouse_pressed)draw_sprite(buffer,coin,10,190);
@@ -376,36 +193,37 @@ void draw(){
 
 
 void setup(){
+
     buffer=create_bitmap(800,600);
 
 
-     // Load fonts
-  f1 = load_font("fonts/slabo_20.pcx", NULL, NULL);
-  f2 = extract_font_range(f1, ' ', 'A'-1);
-  f3 = extract_font_range(f1, 'A', 'Z');
-  f4 = extract_font_range(f1, 'Z'+1, 'z');
-  slabo_20 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+    // Load fonts
+    f1 = load_font("fonts/slabo_20.pcx", NULL, NULL);
+    f2 = extract_font_range(f1, ' ', 'A'-1);
+    f3 = extract_font_range(f1, 'A', 'Z');
+    f4 = extract_font_range(f1, 'Z'+1, 'z');
+    slabo_20 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
 
-  f1 = load_font("fonts/slabo_10.pcx", NULL, NULL);
-  f2 = extract_font_range(f1, ' ', 'A'-1);
-  f3 = extract_font_range(f1, 'A', 'Z');
-  f4 = extract_font_range(f1, 'Z'+1, 'z');
-  slabo_10 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+    f1 = load_font("fonts/slabo_10.pcx", NULL, NULL);
+    f2 = extract_font_range(f1, ' ', 'A'-1);
+    f3 = extract_font_range(f1, 'A', 'Z');
+    f4 = extract_font_range(f1, 'Z'+1, 'z');
+    slabo_10 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
 
-  f1 = load_font("fonts/slabo_26.pcx", NULL, NULL);
-  f2 = extract_font_range(f1, ' ', 'A'-1);
-  f3 = extract_font_range(f1, 'A', 'Z');
-  f4 = extract_font_range(f1, 'Z'+1, 'z');
-  slabo_26 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
+    f1 = load_font("fonts/slabo_26.pcx", NULL, NULL);
+    f2 = extract_font_range(f1, ' ', 'A'-1);
+    f3 = extract_font_range(f1, 'A', 'Z');
+    f4 = extract_font_range(f1, 'Z'+1, 'z');
+    slabo_26 = merge_fonts(f4, f5 = merge_fonts(f2, f3));
 
 
 
-  // Destroy temporary fonts
-  destroy_font(f1);
-  destroy_font(f2);
-  destroy_font(f3);
-  destroy_font(f4);
-  destroy_font(f5);
+    // Destroy temporary fonts
+    destroy_font(f1);
+    destroy_font(f2);
+    destroy_font(f3);
+    destroy_font(f4);
+    destroy_font(f5);
 
 
     srand(time(NULL));
@@ -428,29 +246,16 @@ void setup(){
     if (!(coin = load_bitmap("images/coin.png", NULL)))
      abort_on_error("Cannot find image images/coin.png\nPlease check your files and try again");
 
-    if (!(slave_image = load_bitmap("images/slave.png", NULL)))
-     abort_on_error("Cannot find image images/slave_images.png\nPlease check your files and try again");
-
-    if (!(mine = load_bitmap("images/mine.png", NULL)))
-     abort_on_error("Cannot find image images/mine.png\nPlease check your files and try again");
-
-    if (!(jedclone = load_bitmap("images/jedclone.png", NULL)))
-     abort_on_error("Cannot find image images/jedclone.png\nPlease check your files and try again");
-
-    if (!(forge = load_bitmap("images/forge.png", NULL)))
-     abort_on_error("Cannot find image images/forge.png\nPlease check your files and try again");
-
-    if (!(village = load_bitmap("images/village.png", NULL)))
-     abort_on_error("Cannot find image images/village.png\nPlease check your files and try again");
-
-    if (!(planet = load_bitmap("images/planet.png", NULL)))
-     abort_on_error("Cannot find image images/planet.png\nPlease check your files and try again");
-
-      if (!(cursor = load_bitmap("images/cursor.png", NULL)))
+    if (!(cursor = load_bitmap("images/cursor.png", NULL)))
      abort_on_error("Cannot find image images/cursor.png\nPlease check your files and try again");
 
 
     slave.set_image( "images/slave.png");
+    mine.set_image( "images/mine.png");
+    clone.set_image( "images/jedclone.png");
+    village.set_image( "images/village.png");
+    forge.set_image( "images/forge.png");
+    planet.set_image( "images/planet.png");
 }
 
 

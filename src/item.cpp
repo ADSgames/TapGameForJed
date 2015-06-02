@@ -32,7 +32,7 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
          draw_sprite(tempBitmap,image,x+50+(i*20),y+15);
     }
 
-    textprintf_ex( tempBitmap, newFont, x+50,y, makecol(0,0,0), -1, "%ss:%i" ,name.c_str(),amount);
+    textprintf_ex( tempBitmap, newFont, x+50,y, makecol(0,0,0), -1, "%ss: %i" ,name.c_str(),amount);
 
 
 }
