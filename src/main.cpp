@@ -93,15 +93,12 @@ void abort_on_error(const char *message){
 }
 
 //Declare the items
-item slave(450,5,COINS_PER_SECOND,100,2,"Slave");
-item mine(450,45,COINS_PER_SECOND,500,25,"JedCoin Mine");
-item clone(450,85,COINS_PER_CLICK,100,3,"Jed Clone");
-item forge(450,125,COINS_PER_SECOND,1500,100,"JedCoin Forge");
-item village(450,165,COINS_PER_SECOND,12500,2000,"Village");
-item planet(450,205,COINS_PER_SECOND,1000000,50000,"Planet");
-
-
-
+item slave(550,5,COINS_PER_SECOND,100,2,"Slave");
+item mine(550,45,COINS_PER_SECOND,500,25,"JedCoin Mine");
+item clone(550,85,COINS_PER_CLICK,100,3,"Jed Clone");
+item forge(550,125,COINS_PER_SECOND,1500,100,"JedCoin Forge");
+item village(550,165,COINS_PER_SECOND,12500,2000,"Village");
+item planet(550,205,COINS_PER_SECOND,1000000,50000,"Planet");
 
 
 void update(){
@@ -194,7 +191,7 @@ void draw(){
 
 void setup(){
 
-    buffer=create_bitmap(800,600);
+    buffer=create_bitmap(SCREEN_W,SCREEN_H);
 
 
     // Load fonts
@@ -258,11 +255,6 @@ void setup(){
     planet.set_image( "images/planet.png");
 }
 
-
-
-
-
-
 int main(){
 
   allegro_init();
@@ -273,7 +265,7 @@ int main(){
   set_color_depth(32);
 
 
-  set_gfx_mode(GFX_AUTODETECT_WINDOWED,800,600, 0, 0);
+  set_gfx_mode(GFX_AUTODETECT_WINDOWED,1000,600, 0, 0);
   install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,".");
 
 

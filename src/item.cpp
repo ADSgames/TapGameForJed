@@ -14,7 +14,7 @@ void item::set_image(std::string newImage){
   image = load_bitmap( newImage.c_str(), NULL);
 }
 void item::draw(BITMAP* tempBitmap,FONT* newFont){
-    rect(tempBitmap,x+45,y,799,y+40,makecol(0,0,0));
+    rect(tempBitmap,x+45,y,SCREEN_W-1,y+40,makecol(0,0,0));
     if(money<price){
             rectfill(tempBitmap,x,y,x+45,y+40,makecol(255,0,0));
     }else{
@@ -29,7 +29,7 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
     if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,0,0), -1, "%i JC/S",value);
 
     for( int i = 0; i <amount; i++){
-         draw_sprite(tempBitmap,image,x+50+(i*20),y+15);
+         draw_sprite(tempBitmap,image,x+50+(i*25),y+15);
     }
 
     textprintf_ex( tempBitmap, newFont, x+50,y, makecol(0,0,0), -1, "%ss: %i" ,name.c_str(),amount);
