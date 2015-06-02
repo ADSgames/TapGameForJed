@@ -39,6 +39,7 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
 
 void item::update(){
     step++;
+
     if(location_clicked(x,x+45,y,y+40) && step>10){
         if(money>=price){
             money-=price;
@@ -49,6 +50,7 @@ void item::update(){
             if(type==COINS_PER_SECOND){
               money_per_second+=value;
             }
+
             price=price*1.25;
         }
         step=0;

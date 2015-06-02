@@ -117,7 +117,7 @@ void abort_on_error(const char *message){
 }
 
 //Declare the items
-item slave(450,500,COINS_PER_CLICK,100,2,"Slave");
+item slave(450,500,COINS_PER_SECOND,100,2,"Slave");
 
 
 void update(){
