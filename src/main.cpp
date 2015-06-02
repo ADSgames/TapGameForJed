@@ -124,7 +124,7 @@ item slave(450,500,COINS_PER_CLICK,100,2,"Slave");
 void update(){
 
 
-    slave.check_click();
+    slave.update();
     step++;
 
     for( int i = 0; i <money_particle.size(); i++){
@@ -237,7 +237,6 @@ void draw(){
 
 
 
-    //rect(buffer,495,5,799,45,makecol(0,0,0));
     rect(buffer,495,45,799,85,makecol(0,0,0));
     rect(buffer,495,85,799,125,makecol(0,0,0));
     rect(buffer,495,125,799,165,makecol(0,0,0));
@@ -310,7 +309,7 @@ void draw(){
       textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,205, makecol(0,0,0), -1, "50000 JC/S");
 
 
-   textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "slave_images: %i",slave_images);
+
 
 
 

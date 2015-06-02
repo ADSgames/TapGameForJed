@@ -1,8 +1,8 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#define COINS_PER_SECOND 0
-#define COINS_PER_CLICK 1
+#define COINS_PER_SECOND TRUE
+#define COINS_PER_CLICK FALSE
 
 #include <string>
 #include "allegro.h"
@@ -15,7 +15,7 @@ class item
     void draw(BITMAP* tempBitmap, FONT* newFont);
     virtual ~item();
 
-    bool check_click();
+    void update();
 
     std::string name;
 

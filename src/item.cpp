@@ -8,6 +8,7 @@ item::item(int newX, int newY, bool newType, int newPrice, int newValue, std::st
   type = newType;
   price = newPrice;
   value = newValue;
+  name = newName;
 }
 void item::set_image(std::string newImage){
   image = load_bitmap( newImage.c_str(), NULL);
@@ -24,15 +25,19 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
     rect(tempBitmap,x,y,x+45,y+40,makecol(0,0,0));
 
     textprintf_right_ex( tempBitmap, newFont, x-5,y+10, makecol(0,0,0), -1, "%i",price);
-    textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,0,0), -1, "%i JC/S",value);
+    if(type==COINS_PER_CLICK)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,0,0), -1, "%i JC/C",value);
+    if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,0,0), -1, "%i JC/S",value);
+
     for( int i = 0; i <amount; i++){
          draw_sprite(tempBitmap,image,x+50+(i*20),y+15);
     }
 
+    textprintf_ex( tempBitmap, newFont, x+50,y, makecol(0,0,0), -1, "%ss:%i" ,name.c_str(),amount);
+
 
 }
 
-bool item::check_click(){
+void item::update(){
     if(location_clicked(x,x+45,y,y+40)){
         if(money>=price){
             money-=price;
