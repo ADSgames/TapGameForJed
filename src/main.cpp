@@ -25,8 +25,8 @@ FONT *slabo_26, *slabo_20, *slabo_10;
 
 bool close_button_pressed;
 bool mouse_pressed;
-int money = 1;
-int money_per_second=1;
+int money = 0;
+int money_per_second=0;
 int money_per_click=1;
 int slave_images;
 int slave_image_cost=100;
@@ -117,7 +117,7 @@ void abort_on_error(const char *message){
 }
 
 //Declare the items
-item slave(450,500,COINS_PER_SECOND,100,2,"Slave");
+item slave(450,500,COINS_PER_CLICK,100,2,"Slave");
 
 
 void update(){
