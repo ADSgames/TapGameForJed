@@ -26,8 +26,8 @@ FONT *slabo_26, *slabo_20, *slabo_10;
 bool close_button_pressed;
 bool mouse_pressed;
 int money = 1;
-int mps = 0;
-int mpc = 1;
+int money_per_second=1;
+int money_per_click=1;
 int slave_images;
 int slave_image_cost=100;
 int second_timer;
@@ -106,7 +106,6 @@ bool location_clicked(int min_x,int max_x,int min_y,int max_y){
     else return false;
 }
 
-
 //A function to streamline error reporting in file loading
 void abort_on_error(const char *message){
 	 set_window_title("Error!");
@@ -118,7 +117,7 @@ void abort_on_error(const char *message){
 }
 
 //Declare the items
-item slave(450,500,COINS_PER_CLICK,100,2,"Slave");
+item slave(450,500,COINS_PER_SECOND,100,2,"Slave");
 
 
 void update(){
@@ -141,7 +140,7 @@ void update(){
             step=0;
         if(money>=slave_image_cost){
             money-=slave_image_cost;
-            mps+=2;
+            money_per_second+=2;
             slave_images++;
             slave_image_cost=slave_image_cost+(slave_image_cost/4);
         }
@@ -151,7 +150,7 @@ void update(){
             step=0;
         if(money>=mine_cost){
             money-=mine_cost;
-            mps+=25;
+            money_per_second+=25;
             mines++;
             mine_cost=mine_cost+(mine_cost/4);
         }
@@ -163,7 +162,7 @@ void update(){
             step=0;
         if(money>=jed_clone_cost){
             money-=jed_clone_cost;
-            mpc=mpc*2;
+            money_per_click=money_per_click*2;
             jed_clones++;
             jed_clone_cost=jed_clone_cost*2;
         }
@@ -173,7 +172,7 @@ void update(){
             step=0;
         if(money>=forge_cost){
             money-=forge_cost;
-            mps+=100;
+            money_per_second+=100;
             forges++;
             forge_cost=forge_cost+(forge_cost/4);
         }
@@ -183,7 +182,7 @@ void update(){
         step=0;
         if(money>=village_cost){
             money-=village_cost;
-            mps+=2000;
+            money_per_second+=2000;
             villages++;
             village_cost=village_cost+(village_cost/4);
         }
@@ -193,7 +192,7 @@ void update(){
             step=0;
         if(money>=planet_cost){
             money-=planet_cost;
-            mps+=50000;
+            money_per_second+=50000;
             planets++;
             planet_cost=planet_cost+(planet_cost/4);
         }
@@ -203,9 +202,9 @@ void update(){
 
      if(location_clicked(10,410,190,600) && !mouse_pressed){
         mouse_pressed=true;
-        money+=mpc;
+        money+=money_per_click;
         click++;
-        create_money_particle(random(30,370),random(230,500),mpc);
+        create_money_particle(random(30,370),random(230,500),money_per_click);
 
 
 
@@ -218,9 +217,9 @@ void update(){
 
     if(second_timer>60){
             second_timer=0;
-        money+=mps;
+        money+=money_per_second;
 
-        if(mps!=0)create_money_particle(random(30,370),random(230,500),mps);
+        if(money_per_second!=0)create_money_particle(random(30,370),random(230,500),money_per_second);
     }
 }
 
@@ -231,8 +230,8 @@ void draw(){
 
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
     textprintf_ex( buffer, slabo_26, 5,5, makecol(0,0,0), -1, "JedCoins: %i",money);
-    textprintf_ex( buffer, slabo_20, 5,40, makecol(0,0,0), -1, "JC/S: %i",mps);
-    textprintf_ex( buffer, slabo_20, 5,70, makecol(0,0,0), -1, "JC/C: %i",mpc);
+    textprintf_ex( buffer, slabo_20, 5,40, makecol(0,0,0), -1, "JC/S: %i",money_per_second);
+    textprintf_ex( buffer, slabo_20, 5,70, makecol(0,0,0), -1, "JC/C: %i",money_per_click);
     //textprintf_ex( buffer, font, 20,80, makecol(0,0,0), -1, "Clicks: %i",click);
 
 

@@ -27,6 +27,9 @@ class item
     int amount;
 
     int price;
+
+    int step;
+
     bool type;
 
   protected:

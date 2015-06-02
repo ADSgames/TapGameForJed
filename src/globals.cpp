@@ -1,6 +1,8 @@
 #include "globals.h"
 
 int money = 0;
+int money_per_click = 1;
+int money_per_second = 0;
 
 //Check to see if an area is clicked
 bool location_clicked(int min_x,int max_x,int min_y,int max_y){
