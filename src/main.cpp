@@ -115,7 +115,9 @@ void abort_on_error(const char *message){
 	 allegro_message("%s.\n %s\n", message, allegro_error);
 	 exit(-1);
 }
-item slave(400,40);
+
+//Declare the items
+item slave(450,500,COINS_PER_CLICK,100,2);
 
 
 void update(){
@@ -234,22 +236,13 @@ void draw(){
 
 
 
-    rect(buffer,495,5,799,45,makecol(0,0,0));
+    //rect(buffer,495,5,799,45,makecol(0,0,0));
     rect(buffer,495,45,799,85,makecol(0,0,0));
     rect(buffer,495,85,799,125,makecol(0,0,0));
     rect(buffer,495,125,799,165,makecol(0,0,0));
     rect(buffer,495,165,799,205,makecol(0,0,0));
     rect(buffer,495,205,799,245,makecol(0,0,0));
 
-
-    if(money<slave_image_cost)rectfill(buffer,450,5,495,45,makecol(255,0,0));
-    else{
-      rectfill(buffer,450,5,495,45,makecol(0,255,0));
-      textprintf_ex( buffer, slabo_10, 460,15, makecol(0,0,0), -1, "Buy");
-    }
-    rect(buffer,450,5,495,45,makecol(0,0,0));
-    textprintf_right_ex( buffer, slabo_10, 445,15, makecol(0,0,0), -1, "%i",slave_image_cost);
-    textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,5, makecol(0,0,0), -1, "2 JC/S");
 
 
     //Mines
@@ -371,7 +364,7 @@ void draw(){
     }
 
     draw_sprite(buffer,cursor,mouse_x,mouse_y);
-    slave.draw(buffer);
+    slave.draw(buffer,slabo_10);
     draw_sprite(screen,buffer,0,0);
 
 

@@ -31,7 +31,11 @@
 			<Add library="C:\Libraries\lib\liballeg.a" />
 			<Add library="C:\Libraries\lib\libalpng.a" />
 		</Linker>
-		<Unit filename="main.cpp" />
+		<Unit filename="include/globals.h" />
+		<Unit filename="include/item.h" />
+		<Unit filename="src/globals.cpp" />
+		<Unit filename="src/item.cpp" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
