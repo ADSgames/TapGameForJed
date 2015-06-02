@@ -9,7 +9,7 @@
 BITMAP* buffer;
 BITMAP* coin;
 
-BITMAP* slave;
+BITMAP* slave_image;
 BITMAP* mine;
 BITMAP* jedclone;
 BITMAP* forge;
@@ -27,8 +27,8 @@ bool mouse_pressed;
 int money = 1;
 int mps = 0;
 int mpc = 1;
-int slaves;
-int slave_cost=100;
+int slave_images;
+int slave_image_cost=100;
 int second_timer;
 int click;
 
@@ -115,6 +115,8 @@ void abort_on_error(const char *message){
 	 allegro_message("%s.\n %s\n", message, allegro_error);
 	 exit(-1);
 }
+item slave;
+
 
 void update(){
 
@@ -134,11 +136,11 @@ void update(){
 
     if((key[KEY_A] || location_clicked(450,495,5,45))  && step>10){
             step=0;
-        if(money>=slave_cost){
-            money-=slave_cost;
+        if(money>=slave_image_cost){
+            money-=slave_image_cost;
             mps+=2;
-            slaves++;
-            slave_cost=slave_cost+(slave_cost/4);
+            slave_images++;
+            slave_image_cost=slave_image_cost+(slave_image_cost/4);
         }
     }
 
@@ -240,13 +242,13 @@ void draw(){
     rect(buffer,495,205,799,245,makecol(0,0,0));
 
 
-    if(money<slave_cost)rectfill(buffer,450,5,495,45,makecol(255,0,0));
+    if(money<slave_image_cost)rectfill(buffer,450,5,495,45,makecol(255,0,0));
     else{
       rectfill(buffer,450,5,495,45,makecol(0,255,0));
       textprintf_ex( buffer, slabo_10, 460,15, makecol(0,0,0), -1, "Buy");
     }
     rect(buffer,450,5,495,45,makecol(0,0,0));
-    textprintf_right_ex( buffer, slabo_10, 445,15, makecol(0,0,0), -1, "%i",slave_cost);
+    textprintf_right_ex( buffer, slabo_10, 445,15, makecol(0,0,0), -1, "%i",slave_image_cost);
     textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,5, makecol(0,0,0), -1, "2 JC/S");
 
 
@@ -314,10 +316,10 @@ void draw(){
       textprintf_right_ex( buffer, slabo_10, SCREEN_W-5,205, makecol(0,0,0), -1, "50000 JC/S");
 
 
-   textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "Slaves: %i",slaves);
+   textprintf_ex( buffer, slabo_10, 500,5, makecol(0,0,0), -1, "slave_images: %i",slave_images);
 
-    for( int i = 0; i <slaves; i++){
-        draw_sprite(buffer,slave,500+i*20,20);
+    for( int i = 0; i <slave_images; i++){
+        draw_sprite(buffer,slave_image,500+i*20,20);
     }
 
 
@@ -434,8 +436,8 @@ void setup(){
     if (!(coin = load_bitmap("images/coin.png", NULL)))
      abort_on_error("Cannot find image images/coin.png\nPlease check your files and try again");
 
-    if (!(slave = load_bitmap("images/slave.png", NULL)))
-     abort_on_error("Cannot find image images/slaves.png\nPlease check your files and try again");
+    if (!(slave_image = load_bitmap("images/slave.png", NULL)))
+     abort_on_error("Cannot find image images/slave_images.png\nPlease check your files and try again");
 
     if (!(mine = load_bitmap("images/mine.png", NULL)))
      abort_on_error("Cannot find image images/mine.png\nPlease check your files and try again");
@@ -455,6 +457,8 @@ void setup(){
       if (!(cursor = load_bitmap("images/cursor.png", NULL)))
      abort_on_error("Cannot find image images/cursor.png\nPlease check your files and try again");
 
+
+    slave.set_image( "images/slave.png");
 }
 
 
