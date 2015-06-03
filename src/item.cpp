@@ -3,6 +3,7 @@
 
 item::item(int newX, int newY, bool newType, int newPrice, int newValue, std::string newName)
 {
+  sound = load_sample("audio/sound_buy.wav");
   x=newX;
   y=newY;
   type = newType;
@@ -58,6 +59,7 @@ void item::update(){
 
     if(location_clicked(x,x+45,y,y+40) && step>10){
         if(money>=price){
+            play_sample(sound,255,125,1000,0);
             money-=price;
             amount++;
             if(type==COINS_PER_CLICK){

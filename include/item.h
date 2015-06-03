@@ -35,6 +35,8 @@ class item
     int step;
     int step_scroll;
 
+    SAMPLE* sound;
+
     bool type;
 
   protected:
