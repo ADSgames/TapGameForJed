@@ -17,6 +17,10 @@ class item
 
     void update();
 
+    void addY(int newY);
+
+
+
     std::string name;
 
     BITMAP *image;
@@ -29,6 +33,7 @@ class item
     int price;
 
     int step;
+    int step_scroll;
 
     bool type;
 

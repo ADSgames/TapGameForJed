@@ -10,6 +10,10 @@ item::item(int newX, int newY, bool newType, int newPrice, int newValue, std::st
   value = newValue;
   name = newName;
 }
+void item::addY(int newY){
+    y+=newY;
+}
+
 void item::set_image(std::string newImage){
   image = load_bitmap( newImage.c_str(), NULL);
 }
@@ -38,7 +42,19 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
 }
 
 void item::update(){
+
     step++;
+    step_scroll++;
+
+    if(key[KEY_DOWN] && step_scroll>10){
+        y+=45;
+        step_scroll=0;
+    }
+
+     if(key[KEY_UP] && step_scroll>10){
+        y-=45;
+        step_scroll=0;
+    }
 
     if(location_clicked(x,x+45,y,y+40) && step>10){
         if(money>=price){
