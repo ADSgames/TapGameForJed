@@ -184,6 +184,9 @@ void update(){
     if(key[KEY_I])
       money+=100000;
 
+    if(key[KEY_O])
+      money=money*2;
+
     //Checks if the coin has been clicked, and adds money per click to total money, and creates a money particle.
     if(location_clicked(10,410,190,600) && !mouse_pressed){
 
