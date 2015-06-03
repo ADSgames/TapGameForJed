@@ -144,22 +144,26 @@ void abort_on_error(const char *message){
 //Creates an item based on the item class
 //The arguments are x position, y position, money type, initial cost, amount of money received, and name.
 item slave(550,5,COINS_PER_SECOND,100,2,"Slave");
-item clone(550,45,COINS_PER_CLICK,100,3,"Jed Clone");
+item press(550,45,COINS_PER_CLICK,100,3,"JedCoin Press");
 item workstation(550,85,COINS_PER_SECOND,750,10,"Workstation");
 item mine(550,125,COINS_PER_SECOND,2000,25,"JedCoin Mine");
 item forge(550,165,COINS_PER_SECOND,20000,100,"JedCoin Forge");
-item village(550,205,COINS_PER_SECOND,75000,2000,"Village");
-item planet(550,245,COINS_PER_SECOND,2000000,50000,"Planet");
+item clone(550,205,COINS_PER_CLICK,40000,100,"Jed Clone");
+item powerplant(550,245,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
+item village(550,285,COINS_PER_SECOND,75000,2000,"Village");
+item planet(550,325,COINS_PER_SECOND,2000000,50000,"Planet");
 
 //Update loop handles the whole game's logic.
 void update(){
 
     //Updates each item.
     slave.update();
+    press.update();
     workstation.update();
     mine.update();
     clone.update();
     forge.update();
+    powerplant.update();
     village.update();
     planet.update();
 
@@ -220,10 +224,12 @@ void draw(){
 
     //Draws all the items.
     slave.draw(buffer,slabo_10);
+    press.draw(buffer,slabo_10);
     workstation.draw(buffer,slabo_10);
     mine.draw(buffer,slabo_10);
     clone.draw(buffer,slabo_10);
     forge.draw(buffer,slabo_10);
+    powerplant.draw(buffer,slabo_10);
     village.draw(buffer,slabo_10);
     planet.draw(buffer,slabo_10);
 
@@ -312,8 +318,10 @@ void setup(){
     workstation.set_image( "images/workstation.png");
     mine.set_image( "images/mine.png");
     clone.set_image( "images/jedclone.png");
-    village.set_image( "images/village.png");
+    press.set_image( "images/press.png");
     forge.set_image( "images/forge.png");
+    powerplant.set_image( "images/powerplant.png");
+    village.set_image( "images/village.png");
     planet.set_image( "images/planet.png");
 }
 
