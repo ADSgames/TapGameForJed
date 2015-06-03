@@ -2,7 +2,7 @@
 #define GLOBALS_H
 #include <allegro.h>
 
-extern int money;
+extern long money;
 extern int money_per_click;
 extern int money_per_second;
 

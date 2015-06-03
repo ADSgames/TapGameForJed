@@ -42,6 +42,10 @@ BITMAP* buffer;
 BITMAP* coin;
 BITMAP* cursor;
 
+//Declares the sounds used in the game.
+SAMPLE* sound_click;
+SAMPLE* sound_buy;
+
 //Declares the temporary fonts used to create the other fonts.
 FONT *f1,*f2,*f3,*f4,*f5;
 
@@ -56,7 +60,7 @@ bool close_button_pressed;
 bool mouse_pressed;
 
 //Game variables.
-int money = 0;
+long money = 0;
 int money_per_second=0;
 int money_per_click=1;
 int second_timer;
@@ -152,6 +156,8 @@ item clone(550,205,COINS_PER_CLICK,40000,100,"Jed Clone");
 item powerplant(550,245,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
 item village(550,285,COINS_PER_SECOND,75000,2000,"Village");
 item planet(550,325,COINS_PER_SECOND,2000000,50000,"Planet");
+item jedos(550,365,COINS_PER_CLICK,7500000,2500,"JeDOS AI");
+item jedsalt(550,405,COINS_PER_SECOND,100000000,500000,"Jed Salt");
 
 //Update loop handles the whole game's logic.
 void update(){
@@ -166,6 +172,8 @@ void update(){
     powerplant.update();
     village.update();
     planet.update();
+    jedos.update();
+    jedsalt.update();
 
     //Iterates through the vector stack and moves them, and if they are off the screen, delete them.
     for( int i = 0; i <money_particle.size(); i++){
@@ -189,7 +197,7 @@ void update(){
 
     //Checks if the coin has been clicked, and adds money per click to total money, and creates a money particle.
     if(location_clicked(10,410,190,600) && !mouse_pressed){
-
+        play_sample(sound_click,255,125,1000,0);
         mouse_pressed=true;
         money+=money_per_click;
         click++;
@@ -204,6 +212,7 @@ void update(){
     //This runs once every second.
     //It adds the money per second to total money.
     if(second_timer>60){
+
         second_timer=0;
         money+=money_per_second;
 
@@ -235,6 +244,8 @@ void draw(){
     powerplant.draw(buffer,slabo_10);
     village.draw(buffer,slabo_10);
     planet.draw(buffer,slabo_10);
+    jedos.draw(buffer,slabo_10);
+    jedsalt.draw(buffer,slabo_10);
 
     //Draws the coin if its not clicked.
     if(!mouse_pressed)draw_sprite(buffer,coin,10,190);
@@ -326,6 +337,15 @@ void setup(){
     powerplant.set_image( "images/powerplant.png");
     village.set_image( "images/village.png");
     planet.set_image( "images/planet.png");
+    jedos.set_image( "images/jedos.png");
+    jedsalt.set_image( "images/jedsalt.png");
+
+    //Load sounds from file
+    if( !(sound_click = load_sample("audio/sound_click.wav")))
+        abort_on_error( "Cannot find file audio/sound_click.wav \n Please check your files and try again");
+
+    if( !(sound_buy = load_sample("audio/sound_buy.wav")))
+        abort_on_error( "Cannot find file audio/sound_buy.wav \n Please check your files and try again");
 }
 
 int main(){
