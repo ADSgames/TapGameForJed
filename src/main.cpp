@@ -144,17 +144,19 @@ void abort_on_error(const char *message){
 //Creates an item based on the item class
 //The arguments are x position, y position, money type, initial cost, amount of money received, and name.
 item slave(550,5,COINS_PER_SECOND,100,2,"Slave");
-item mine(550,45,COINS_PER_SECOND,500,25,"JedCoin Mine");
-item clone(550,85,COINS_PER_CLICK,100,3,"Jed Clone");
-item forge(550,125,COINS_PER_SECOND,1500,100,"JedCoin Forge");
-item village(550,165,COINS_PER_SECOND,12500,2000,"Village");
-item planet(550,205,COINS_PER_SECOND,1000000,50000,"Planet");
+item clone(550,45,COINS_PER_CLICK,100,3,"Jed Clone");
+item workstation(550,85,COINS_PER_SECOND,750,10,"Workstation");
+item mine(550,125,COINS_PER_SECOND,2000,25,"JedCoin Mine");
+item forge(550,165,COINS_PER_SECOND,20000,100,"JedCoin Forge");
+item village(550,205,COINS_PER_SECOND,75000,2000,"Village");
+item planet(550,245,COINS_PER_SECOND,2000000,50000,"Planet");
 
 //Update loop handles the whole game's logic.
 void update(){
 
     //Updates each item.
     slave.update();
+    workstation.update();
     mine.update();
     clone.update();
     forge.update();
@@ -218,6 +220,7 @@ void draw(){
 
     //Draws all the items.
     slave.draw(buffer,slabo_10);
+    workstation.draw(buffer,slabo_10);
     mine.draw(buffer,slabo_10);
     clone.draw(buffer,slabo_10);
     forge.draw(buffer,slabo_10);
@@ -306,6 +309,7 @@ void setup(){
 
     //Load item images from file.
     slave.set_image( "images/slave.png");
+    workstation.set_image( "images/workstation.png");
     mine.set_image( "images/mine.png");
     clone.set_image( "images/jedclone.png");
     village.set_image( "images/village.png");
