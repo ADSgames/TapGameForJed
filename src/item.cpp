@@ -48,12 +48,12 @@ void item::update(){
     step_scroll++;
 
     if(key[KEY_DOWN] && step_scroll>10){
-        y+=45;
+        y+=40;
         step_scroll=0;
     }
 
      if(key[KEY_UP] && step_scroll>10){
-        y-=45;
+        y-=40;
         step_scroll=0;
     }
 
@@ -73,6 +73,24 @@ void item::update(){
         }
         step=0;
     }
+
+    if(location_right_clicked(x,x+45,y,y+40)){
+        if(money>=price){
+            play_sample(sound,255,125,1000,0);
+            money-=price;
+            amount++;
+            if(type==COINS_PER_CLICK){
+              money_per_click+=value;
+            }
+            if(type==COINS_PER_SECOND){
+              money_per_second+=value;
+            }
+
+            price=price*1.25;
+        }
+
+    }
+
 
 
 }
