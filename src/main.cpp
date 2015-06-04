@@ -17,6 +17,9 @@
 //Provides routines for graphics and sound.
 #include<allegro.h>
 
+//poop.bike
+#include<sstream>
+
 //Imports Allegro PNG.
 //An extension of Allegro to import .png files.
 #include<alpng.h>
@@ -60,9 +63,9 @@ bool close_button_pressed;
 bool mouse_pressed;
 
 //Game variables.
-long money = 0;
-int money_per_second=0;
-int money_per_click=1;
+unsigned long long money = 0;
+unsigned long long money_per_second=0;
+unsigned long long money_per_click=1;
 int second_timer;
 int click;
 
@@ -272,6 +275,14 @@ void draw(){
     for( int i = 0; i <money_particle.size(); i++){
         textprintf_ex( buffer, slabo_10, money_particle[i].x,money_particle[i].y, makecol(0,100,0), -1, "$%i",money_particle[i].value);
     }
+    unsigned long long reallybignumber = 18446744073709551615;
+    std::stringstream ss;
+    ss << reallybignumber;
+
+    std::string rbns = ss.str();
+
+    textprintf_ex( buffer, font, 5,5, makecol(0,0,0), -1, "%s",rbns.c_str());
+
 
     //Draw the cursor.
     draw_sprite(buffer,cursor,mouse_x,mouse_y);

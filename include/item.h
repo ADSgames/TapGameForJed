@@ -5,6 +5,7 @@
 #define COINS_PER_CLICK FALSE
 
 #include <string>
+#include <sstream>
 #include "allegro.h"
 
 class item
@@ -26,11 +27,11 @@ class item
     BITMAP *image;
     int x;
     int y;
-    int value;
+    unsigned long long value;
 
-    int amount;
+    unsigned long long amount;
 
-    int price;
+    unsigned long long price;
 
     int step;
     int step_scroll;
