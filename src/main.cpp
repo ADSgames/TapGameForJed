@@ -164,8 +164,9 @@ item powerplant(550,285,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
 item village(550,325,COINS_PER_SECOND,100000,2000,"Village");
 item spacestation(550,365,COINS_PER_SECOND,1250000,3500,"Space Station");
 item planet(550,405,COINS_PER_SECOND,2000000,50000,"Planet");
-item jedos(550,445,COINS_PER_CLICK,7500000,2500,"JeDOS AI");
-item jedsalt(550,485,COINS_PER_SECOND,100000000,500000,"Jed Salt");
+item jedos(550,445,COINS_PER_CLICK,7500000,5000,"JeDOS AI");
+item teleporter(550,485,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
+item jedsalt(550,525,COINS_PER_SECOND,500000000,1000000,"Jed Salt");
 
 //Update loop handles the whole game's logic.
 void update(){
@@ -183,6 +184,7 @@ void update(){
     spacestation.update();
     planet.update();
     jedos.update();
+    teleporter.update();
     jedsalt.update();
 
     //Iterates through the vector stack and moves them, and if they are off the screen, delete them.
@@ -257,6 +259,7 @@ void draw(){
     spacestation.draw(buffer,slabo_10);
     planet.draw(buffer,slabo_10);
     jedos.draw(buffer,slabo_10);
+    teleporter.draw(buffer,slabo_10);
     jedsalt.draw(buffer,slabo_10);
 
     //Draws the coin if its not clicked.
@@ -351,6 +354,7 @@ void setup(){
     spacestation.set_image( "images/spacestation.png");
     planet.set_image( "images/planet.png");
     jedos.set_image( "images/jedos.png");
+    teleporter.set_image( "images/teleporter.png");
     jedsalt.set_image( "images/jedsalt.png");
     jmocrop.set_image( "images/jmocrop.png");
 
