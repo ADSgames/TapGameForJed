@@ -378,7 +378,7 @@ int main(){
     //Setup sound.
     install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,".");
 
-    set_window_title("Jed's tap game");
+    set_window_title("Jed Clicker");
 
     //Sets up the game.
     setup();
