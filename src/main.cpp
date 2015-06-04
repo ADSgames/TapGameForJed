@@ -158,13 +158,14 @@ item press(550,45,COINS_PER_CLICK,100,3,"JedCoin Press");
 item workstation(550,85,COINS_PER_SECOND,750,10,"Workstation");
 item mine(550,125,COINS_PER_SECOND,2000,25,"JedCoin Mine");
 item forge(550,165,COINS_PER_SECOND,20000,100,"JedCoin Forge");
-item clone(550,205,COINS_PER_CLICK,40000,100,"Jed Clone");
-item powerplant(550,245,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
-item village(550,285,COINS_PER_SECOND,100000,2000,"Village");
-item spacestation(550,325,COINS_PER_SECOND,1250000,3500,"Space Station");
-item planet(550,365,COINS_PER_SECOND,2000000,50000,"Planet");
-item jedos(550,405,COINS_PER_CLICK,7500000,2500,"JeDOS AI");
-item jedsalt(550,445,COINS_PER_SECOND,100000000,500000,"Jed Salt");
+item jmocrop(550,205,COINS_PER_SECOND,35000,300,"Jedetically Modified Crop");
+item clone(550,245,COINS_PER_CLICK,40000,100,"Jed Clone");
+item powerplant(550,285,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
+item village(550,325,COINS_PER_SECOND,100000,2000,"Village");
+item spacestation(550,365,COINS_PER_SECOND,1250000,3500,"Space Station");
+item planet(550,405,COINS_PER_SECOND,2000000,50000,"Planet");
+item jedos(550,445,COINS_PER_CLICK,7500000,2500,"JeDOS AI");
+item jedsalt(550,485,COINS_PER_SECOND,100000000,500000,"Jed Salt");
 
 //Update loop handles the whole game's logic.
 void update(){
@@ -176,6 +177,7 @@ void update(){
     mine.update();
     clone.update();
     forge.update();
+    jmocrop.update();
     powerplant.update();
     village.update();
     spacestation.update();
@@ -249,6 +251,7 @@ void draw(){
     mine.draw(buffer,slabo_10);
     clone.draw(buffer,slabo_10);
     forge.draw(buffer,slabo_10);
+    jmocrop.draw(buffer,slabo_10);
     powerplant.draw(buffer,slabo_10);
     village.draw(buffer,slabo_10);
     spacestation.draw(buffer,slabo_10);
@@ -349,6 +352,7 @@ void setup(){
     planet.set_image( "images/planet.png");
     jedos.set_image( "images/jedos.png");
     jedsalt.set_image( "images/jedsalt.png");
+    jmocrop.set_image( "images/jmocrop.png");
 
     //Load sounds from file
     if( !(sound_click = load_sample("audio/sound_click.wav")))
