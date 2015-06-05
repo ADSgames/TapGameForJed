@@ -105,6 +105,14 @@ struct money_particles{
 //Allows for infinite amounts of money particles to be used at once.
 std::vector<money_particles> money_particle;
 
+std::string longToString(unsigned long long newLong){
+    std::stringstream newStringStream;
+    newStringStream << newLong;
+    std::string newResult = newStringStream.str();
+    return newResult;
+
+}
+
 //Random number generator function.
 //Used for the random location of money particles
 int random(int newLowest, int newHighest)
@@ -243,10 +251,11 @@ void draw(){
     //White background.
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
 
+
     //Prints stats to the screen.
-    textprintf_ex( buffer, slabo_26, 5,5, makecol(0,0,0), -1, "JedCoins: %i",money);
-    textprintf_ex( buffer, slabo_20, 5,40, makecol(0,0,0), -1, "JC/S: %i",money_per_second);
-    textprintf_ex( buffer, slabo_20, 5,70, makecol(0,0,0), -1, "JC/C: %i",money_per_click);
+    textprintf_ex( buffer, slabo_26, 5,5, makecol(0,0,0), -1, "JedCoins: %s",longToString(money).c_str());
+    textprintf_ex( buffer, slabo_20, 5,40, makecol(0,0,0), -1, "JC/S: %s",longToString(money_per_second).c_str());
+    textprintf_ex( buffer, slabo_20, 5,70, makecol(0,0,0), -1, "JC/C: %s",longToString(money_per_click).c_str());
     //textprintf_ex( buffer, font, 20,80, makecol(0,0,0), -1, "Clicks: %i",click);
 
     //Draws all the items.
@@ -275,13 +284,6 @@ void draw(){
     for( int i = 0; i <money_particle.size(); i++){
         textprintf_ex( buffer, slabo_10, money_particle[i].x,money_particle[i].y, makecol(0,100,0), -1, "$%i",money_particle[i].value);
     }
-    unsigned long long reallybignumber = 18446744073709551615;
-    std::stringstream ss;
-    ss << reallybignumber;
-
-    std::string rbns = ss.str();
-
-    textprintf_ex( buffer, font, 5,5, makecol(0,0,0), -1, "%s",rbns.c_str());
 
 
     //Draw the cursor.
