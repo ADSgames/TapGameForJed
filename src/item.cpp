@@ -49,6 +49,16 @@ void item::update(){
     step++;
     step_scroll++;
 
+    if(mouse_z > old_mouse_z){
+        y+=40;
+    }
+    if(mouse_z < old_mouse_z){
+        y-=40;
+    }
+
+
+    old_mouse_z = mouse_z;
+
     if(key[KEY_DOWN] && step_scroll>10){
         y+=40;
         step_scroll=0;

@@ -33,6 +33,8 @@ class item
 
     unsigned long long price;
 
+    int old_mouse_z;
+
     int step;
     int step_scroll;
 
