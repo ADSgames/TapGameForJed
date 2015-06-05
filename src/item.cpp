@@ -85,7 +85,8 @@ void item::update(){
         }
         step=0;
     }
-
+    if(location_middle_clicked(x,x+45,y,y+40) && step>10){
+    }
     if(location_right_clicked(x,x+45,y,y+40)){
         if(money>=price){
             play_sample(sound,255,125,1000,0);

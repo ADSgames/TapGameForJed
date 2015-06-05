@@ -151,6 +151,13 @@ bool location_right_clicked(int min_x,int max_x,int min_y,int max_y){
     else return false;
 }
 
+bool location_middle_clicked(int min_x,int max_x,int min_y,int max_y){
+    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && mouse_b & 4)
+        return true;
+    else return false;
+}
+
+
 //A function to make an error message popup box.
 //Used if an image is not found.
 void abort_on_error(const char *message){
@@ -224,7 +231,7 @@ void update(){
       money=money*2;
 
     //Checks if the coin has been clicked, and adds money per click to total money, and creates a money particle.
-    if(location_clicked(10,410,190,600) && !mouse_pressed){
+    if((location_clicked(10,410,190,600) || location_middle_clicked(10,410,190,600) || location_right_clicked(10,410,190,600)) && !mouse_pressed){
         play_sample(sound_click,255,125,1000,0);
         mouse_pressed=true;
         money+=money_per_click;
