@@ -164,22 +164,22 @@ void abort_on_error(const char *message){
 
 //Creates an item based on the item class
 //The arguments are x position, y position, money type, initial cost, amount of money received, and name.
-item slave(550,5,COINS_PER_SECOND,100,2,"Slave");
-item press(550,45,COINS_PER_CLICK,100,2,"JedCoin Press");
-item workstation(550,85,COINS_PER_SECOND,750,10,"Workstation");
-item mine(550,125,COINS_PER_SECOND,2000,25,"JedCoin Mine");
-item forge(550,165,COINS_PER_SECOND,20000,100,"JedCoin Forge");
-item jmocrop(550,205,COINS_PER_SECOND,35000,300,"Jedetically Modified Crop");
-item clone(550,245,COINS_PER_CLICK,40000,100,"Jed Clone");
-item powerplant(550,285,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
-item village(550,325,COINS_PER_SECOND,100000,2000,"Village");
-item spacestation(550,365,COINS_PER_SECOND,1250000,3500,"Space Station");
-item planet(550,405,COINS_PER_SECOND,2000000,50000,"Planet");
-item jedos(550,445,COINS_PER_CLICK,7500000,5000,"JeDOS AI");
-item teleporter(550,485,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
-item magnet(550,525,COINS_PER_CLICK,150000000,25000,"Electromagnetic Coin Magnifier");
-item jedsalt(550,565,COINS_PER_SECOND,500000000,1000000,"Jed Salt");
-
+item slave(550,0,COINS_PER_SECOND,100,2,"Slave");
+item press(550,40,COINS_PER_CLICK,100,2,"JedCoin Press");
+item workstation(550,80,COINS_PER_SECOND,750,10,"Workstation");
+item mine(550,120,COINS_PER_SECOND,2000,25,"JedCoin Mine");
+item forge(550,160,COINS_PER_SECOND,20000,100,"JedCoin Forge");
+item jmocrop(550,200,COINS_PER_SECOND,35000,300,"Jedetically Modified Crop");
+item clone(550,240,COINS_PER_CLICK,40000,100,"Jed Clone");
+item powerplant(550,280,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
+item village(550,320,COINS_PER_SECOND,100000,2000,"Village");
+item spacestation(550,360,COINS_PER_SECOND,1250000,3500,"Space Station");
+item planet(550,400,COINS_PER_SECOND,2000000,50000,"Planet");
+item jedos(550,440,COINS_PER_CLICK,7500000,5000,"JeDOS AI");
+item teleporter(550,480,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
+item magnet(550,520,COINS_PER_CLICK,150000000,25000,"Electromagnetic Coin Magnifier");
+item jedsalt(550,560,COINS_PER_SECOND,500000000,1000000,"Jed Salt");
+item robot(550,600,COINS_PER_SECOND,900000000,2500000,"Killer Robot");
 
 
 //Update loop handles the whole game's logic.
@@ -201,6 +201,7 @@ void update(){
     teleporter.update();
     magnet.update();
     jedsalt.update();
+    robot.update();
 
     //Iterates through the vector stack and moves them, and if they are off the screen, delete them.
     for( int i = 0; i <money_particle.size(); i++){
@@ -278,6 +279,7 @@ void draw(){
     teleporter.draw(buffer,slabo_10);
     magnet.draw(buffer,slabo_10);
     jedsalt.draw(buffer,slabo_10);
+    robot.draw(buffer,slabo_10);
 
     //Draws the coin if its not clicked.
     if(!mouse_pressed)draw_sprite(buffer,coin,10,190);
@@ -376,6 +378,7 @@ void setup(){
     magnet.set_image( "images/magnet.png");
     jedsalt.set_image( "images/jedsalt.png");
     jmocrop.set_image( "images/jmocrop.png");
+    robot.set_image( "images/robot.png");
 
     //Load sounds from file
     if( !(sound_click = load_sample("audio/sound_click.wav")))
