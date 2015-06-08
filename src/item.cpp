@@ -30,10 +30,10 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
     rect(tempBitmap,x,y,x+45,y+40,makecol(0,0,0));
 
     //
-    textprintf_right_ex( tempBitmap, newFont, x-5,y+10, makecol(0,0,0), -1, "%s",longToString(price).c_str());
+    textprintf_right_ex( tempBitmap, newFont, x-5,y+10, makecol(0,0,0), -1, "%s",number_fmt(price).c_str());
 
-    if(type==COINS_PER_CLICK)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(200,0,0), -1, "%s JC/C",longToString(value).c_str());
-    if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,100,0), -1, "%s JC/S",longToString(value).c_str());
+    if(type==COINS_PER_CLICK)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(200,0,0), -1, "%s JC/C",number_fmt(value).c_str());
+    if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,100,0), -1, "%s JC/S",number_fmt(value).c_str());
 
     for( int i = 0; i <amount; i++){
          draw_sprite(tempBitmap,image,x+50+(i*25),y+15);
