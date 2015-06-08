@@ -98,7 +98,7 @@ END_OF_FUNCTION(close_button_handler)
 struct money_particles{
     int x;
     int y;
-    int value;
+    unsigned long long value;
 };
 
 //A vector of money_particles.
@@ -137,6 +137,25 @@ void create_money_particle(int newX, int newY, int newValue){
     money_particle.push_back(newMoneyParticle);
 
 }
+
+//Code from the internet
+std::string number_fmt(unsigned long long n, char sep = ',') {
+    std::stringstream fmt;
+    fmt << n;
+    std::string s = fmt.str();
+    s.reserve(s.length() + s.length() / 3);
+
+    // loop until the end of the string and use j to keep track of every
+    // third loop starting taking into account the leading x digits (this probably
+    // can be rewritten in terms of just i, but it seems more clear when you use
+    // a seperate variable)
+    for (int i = 0, j = 3 - s.length() % 3; i < s.length(); ++i, ++j)
+        if (i != 0 && j % 3 == 0)
+            s.insert(i++, 1, sep);
+
+    return s;
+}
+
 //Function to see if a rectangular area has been clicked.
 //Used in the coin and by the item boxes.
 bool location_clicked(int min_x,int max_x,int min_y,int max_y){
@@ -265,9 +284,10 @@ void draw(){
 
 
     //Prints stats to the screen.
-    textprintf_ex( buffer, slabo_26, 5,5, makecol(0,0,0), -1, "JedCoins: %s",longToString(money).c_str());
-    textprintf_ex( buffer, slabo_20, 5,40, makecol(0,0,0), -1, "JC/S: %s",longToString(money_per_second).c_str());
-    textprintf_ex( buffer, slabo_20, 5,70, makecol(0,0,0), -1, "JC/C: %s",longToString(money_per_click).c_str());
+    //number_fmt(money);
+    textprintf_ex( buffer, slabo_20, 5,5, makecol(0,0,0), -1, "JedCoins: %s",number_fmt(money).c_str());
+    textprintf_ex( buffer, slabo_20, 5,30, makecol(0,0,0), -1, "JC/S: %s",number_fmt(money_per_second).c_str());
+    textprintf_ex( buffer, slabo_20, 5,60, makecol(0,0,0), -1, "JC/C: %s",number_fmt(money_per_click).c_str());
     //textprintf_ex( buffer, font, 20,80, makecol(0,0,0), -1, "Clicks: %i",click);
 
     //Draws all the items.
@@ -295,8 +315,9 @@ void draw(){
     if(mouse_pressed)stretch_sprite(buffer,coin,30,210,360,360);
 
     //Iterate through all the money particles in the vector and draws each.
+
     for( int i = 0; i <money_particle.size(); i++){
-        textprintf_ex( buffer, slabo_10, money_particle[i].x,money_particle[i].y, makecol(0,100,0), -1, "$%i",money_particle[i].value);
+        textprintf_ex( buffer, slabo_10, money_particle[i].x,money_particle[i].y, makecol(0,100,0), -1, "$%s",number_fmt(money_particle[i].value).c_str());
     }
 
 
