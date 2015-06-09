@@ -19,6 +19,7 @@ void item::set_image(std::string newImage){
   image = load_bitmap( newImage.c_str(), NULL);
 }
 void item::draw(BITMAP* tempBitmap,FONT* newFont){
+
     rect(tempBitmap,x+45,y,SCREEN_W-1,y+40,makecol(0,0,0));
     if(money<price){
             rectfill(tempBitmap,x,y,x+45,y+40,makecol(255,0,0));
@@ -26,6 +27,9 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
         rectfill(tempBitmap,x,y,x+45,y+40,makecol(0,255,0));
 
         textprintf_ex( tempBitmap,newFont, x+10,y+10, makecol(0,0,0), -1, "Buy");
+    }
+    if(name=="Jed" && amount>0){
+        rectfill(tempBitmap,x,y,x+45,y+40,makecol(0,0,200));
     }
     rect(tempBitmap,x,y,x+45,y+40,makecol(0,0,0));
 
@@ -68,40 +72,42 @@ void item::update(){
         y-=40;
         step_scroll=0;
     }
+    if((name=="Jed" && amount==0)|| name!="Jed" ){
+        if(location_clicked(x,x+45,y,y+40) && step>10){
+            if(money>=price){
+                play_sample(sound,255,125,1000,0);
+                money-=price;
+                amount++;
+                if(type==COINS_PER_CLICK){
+                money_per_click+=value;
+                }
+                if(type==COINS_PER_SECOND){
+                    money_per_second+=value;
+                }
 
-    if(location_clicked(x,x+45,y,y+40) && step>10){
-        if(money>=price){
-            play_sample(sound,255,125,1000,0);
-            money-=price;
-            amount++;
-            if(type==COINS_PER_CLICK){
-              money_per_click+=value;
+                price=price*1.25;
             }
-            if(type==COINS_PER_SECOND){
-              money_per_second+=value;
-            }
-
-            price=price*1.25;
+            step=0;
         }
-        step=0;
+
+        if(location_right_clicked(x,x+45,y,y+40)){
+            if(money>=price){
+                play_sample(sound,255,125,1000,0);
+                money-=price;
+                amount++;
+                if(type==COINS_PER_CLICK){
+                    money_per_click+=value;
+                }
+                if(type==COINS_PER_SECOND){
+                    money_per_second+=value;
+                }
+
+                price=price*1.25;
+            }
+        }
     }
+
     if(location_middle_clicked(x,x+45,y,y+40) && step>10){
-    }
-    if(location_right_clicked(x,x+45,y,y+40)){
-        if(money>=price){
-            play_sample(sound,255,125,1000,0);
-            money-=price;
-            amount++;
-            if(type==COINS_PER_CLICK){
-              money_per_click+=value;
-            }
-            if(type==COINS_PER_SECOND){
-              money_per_second+=value;
-            }
-
-            price=price*1.25;
-        }
-
     }
 
 

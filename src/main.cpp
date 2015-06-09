@@ -74,6 +74,8 @@ volatile int ticks = 0;
 const int updates_per_second = 60;
 volatile int game_time = 0;
 
+bool won = false;
+
 int fps;
 int frames_done;
 int old_time;
@@ -206,6 +208,7 @@ item teleporter(550,480,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
 item magnet(550,520,COINS_PER_CLICK,150000000,25000,"Electromagnetic Coin Magnifier");
 item jedsalt(550,560,COINS_PER_SECOND,500000000,1000000,"Jed Salt");
 item robot(550,600,COINS_PER_SECOND,900000000,2500000,"Killer Robot");
+item jed(550,640,COINS_PER_SECOND,1000000000000,1000000000,"Jed");
 
 
 //Update loop handles the whole game's logic.
@@ -228,6 +231,12 @@ void update(){
     magnet.update();
     jedsalt.update();
     robot.update();
+    jed.update();
+
+    if(jed.amount>0 && !won){
+        allegro_message("You win!");
+        won=true;
+    }
 
     //Iterates through the vector stack and moves them, and if they are off the screen, delete them.
     for( int i = 0; i <money_particle.size(); i++){
@@ -307,6 +316,7 @@ void draw(){
     magnet.draw(buffer,slabo_10);
     jedsalt.draw(buffer,slabo_10);
     robot.draw(buffer,slabo_10);
+    jed.draw(buffer,slabo_10);
 
     //Draws the coin if its not clicked.
     if(!mouse_pressed)draw_sprite(buffer,coin,10,190);
@@ -407,6 +417,7 @@ void setup(){
     jedsalt.set_image( "images/jedsalt.png");
     jmocrop.set_image( "images/jmocrop.png");
     robot.set_image( "images/robot.png");
+    jed.set_image( "images/jed.png");
 
     //Load sounds from file
     if( !(sound_click = load_sample("audio/sound_click.wav")))

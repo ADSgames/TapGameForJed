@@ -22,6 +22,7 @@ class item
 
 
 
+
     std::string name;
 
     BITMAP *image;
