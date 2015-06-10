@@ -1,7 +1,7 @@
 #include "item.h"
 #include "globals.h"
 
-item::item(int newX, int newY, bool newType, int newPrice, int newValue, std::string newName)
+item::item(int newX, int newY, bool newType, unsigned long long newPrice, unsigned long long newValue, std::string newName)
 {
   sound = load_sample("audio/sound_buy.wav");
   x=newX;
@@ -13,6 +13,24 @@ item::item(int newX, int newY, bool newType, int newPrice, int newValue, std::st
 }
 void item::addY(int newY){
     y+=newY;
+}
+//Code from the internet
+std::string item::longThingy(unsigned long long n, char sep = ',') {
+    std::stringstream fmt;
+    fmt << n;
+    std::string s = fmt.str();
+
+    s.reserve(s.length() + s.length() / 3);
+
+    // loop until the end of the string and use j to keep track of every
+    // third loop starting taking into account the leading x digits (this probably
+    // can be rewritten in terms of just i, but it seems more clear when you use
+    // a seperate variable)
+    for (int i = 0, j = 3 - s.length() % 3; i < s.length(); ++i, ++j)
+        if (i != 0 && j % 3 == 0)
+            s.insert(i++, 1, sep);
+
+    return s;
 }
 
 void item::set_image(std::string newImage){
@@ -34,10 +52,10 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
     rect(tempBitmap,x,y,x+45,y+40,makecol(0,0,0));
 
     //
-    textprintf_right_ex( tempBitmap, newFont, x-5,y+10, makecol(0,0,0), -1, "%s",number_fmt(price).c_str());
+    textprintf_right_ex( tempBitmap, newFont, x-5,y+10, makecol(0,0,0), -1, "%s",longThingy(price).c_str());
 
-    if(type==COINS_PER_CLICK)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(200,0,0), -1, "%s JC/C",number_fmt(value).c_str());
-    if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,100,0), -1, "%s JC/S",number_fmt(value).c_str());
+    if(type==COINS_PER_CLICK)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(200,0,0), -1, "%s JC/C",longThingy(value).c_str());
+    if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,100,0), -1, "%s JC/S",longThingy(value).c_str());
 
     for( int i = 0; i <amount; i++){
          draw_sprite(tempBitmap,image,x+50+(i*25),y+15);

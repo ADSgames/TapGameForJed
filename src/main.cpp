@@ -206,10 +206,11 @@ item planet(550,400,COINS_PER_SECOND,2000000,50000,"Planet");
 item jedos(550,440,COINS_PER_CLICK,7500000,5000,"JeDOS AI");
 item teleporter(550,480,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
 item magnet(550,520,COINS_PER_CLICK,150000000,25000,"Electromagnetic Coin Magnifier");
-item jedsalt(550,560,COINS_PER_SECOND,500000000,1000000,"Jed Salt");
-item robot(550,600,COINS_PER_SECOND,900000000,2500000,"Killer Robot");
-item jed(550,640,COINS_PER_SECOND,1000000000000,1000000000,"Jed");
-
+item robot(550,560,COINS_PER_SECOND,500000000,1000000,"Killer Robot");
+item darkcoin(550,600,COINS_PER_SECOND,1000000000,3000000,"Dark Matter Coin");
+item starship(550,640,COINS_PER_SECOND,2500000000,3000000,"Starship Fleet");
+item jedsalt(550,680,COINS_PER_SECOND,10000000000,6500000,"Jed Salt");
+item jed(550,720,COINS_PER_SECOND,10000000000000,1000000000,"Jed");
 
 //Update loop handles the whole game's logic.
 void update(){
@@ -231,6 +232,8 @@ void update(){
     magnet.update();
     jedsalt.update();
     robot.update();
+    darkcoin.update();
+    starship.update();
     jed.update();
 
     if(jed.amount>0 && !won){
@@ -316,7 +319,10 @@ void draw(){
     magnet.draw(buffer,slabo_10);
     jedsalt.draw(buffer,slabo_10);
     robot.draw(buffer,slabo_10);
+    darkcoin.draw(buffer,slabo_10);
+    starship.draw(buffer,slabo_10);
     jed.draw(buffer,slabo_10);
+
 
     //Draws the coin if its not clicked.
     if(!mouse_pressed)draw_sprite(buffer,coin,10,190);
@@ -417,6 +423,8 @@ void setup(){
     jedsalt.set_image( "images/jedsalt.png");
     jmocrop.set_image( "images/jmocrop.png");
     robot.set_image( "images/robot.png");
+    darkcoin.set_image( "images/darkcoin.png");
+    starship.set_image( "images/starship.png");
     jed.set_image( "images/jed.png");
 
     //Load sounds from file

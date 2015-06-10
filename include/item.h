@@ -11,7 +11,7 @@
 class item
 {
   public:
-    item(int newX, int newY, bool newType, int newPrice, int newValue, std::string newName);
+    item(int newX, int newY, bool newType, unsigned long long newPrice, unsigned long long newValue, std::string newName);
     void set_image(std::string newImage);
     void draw(BITMAP* tempBitmap, FONT* newFont);
     virtual ~item();
@@ -21,7 +21,7 @@ class item
     void addY(int newY);
 
 
-
+    std::string longThingy(unsigned long long n, char sep);
 
     std::string name;
 
