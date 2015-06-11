@@ -208,11 +208,12 @@ item teleporter(550,480,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
 item magnet(550,520,COINS_PER_CLICK,150000000,25000,"Electromagnetic Coin Magnifier");
 item robot(550,560,COINS_PER_SECOND,500000000,1000000,"Killer Robot");
 item darkcoin(550,600,COINS_PER_SECOND,1000000000,3000000,"Dark Matter Coin");
-item starship(550,640,COINS_PER_SECOND,2500000000,3000000,"Starship Fleet");
-item planet(550,680,COINS_PER_SECOND,7500000000,50000,"Distant Inhabitable Planet");
-item jedsalt(550,720,COINS_PER_SECOND,15000000000,6500000,"Jed Salt");
-item jed(550,760,COINS_PER_SECOND,10000000000000,1000000000,"Jed");
-item cookie(550,800,COINS_PER_SECOND,7,0,"Depressed Cookie");
+item starship(550,640,COINS_PER_SECOND,2500000000,6000000,"Starship Fleet");
+item planet(550,680,COINS_PER_SECOND,7500000000,20000000,"Distant Inhabitable Planet");
+item blackhole(550,720,COINS_PER_SECOND,10000000000,80000000,"Black Hole");
+item jedsalt(550,760,COINS_PER_SECOND,150000000000,200000000,"Jed Salt");
+item jed(550,800,COINS_PER_SECOND,100000000000000,30000000000,"Jed");
+item cookie(550,840,COINS_PER_SECOND,7,0,"Depressed Cookie");
 
 //Update loop handles the whole game's logic.
 void update(){
@@ -237,6 +238,7 @@ void update(){
     darkcoin.update();
     starship.update();
     planet.update();
+    blackhole.update();
     jed.update();
     cookie.update();
 
@@ -327,6 +329,7 @@ void draw(){
     starship.draw(buffer,slabo_10);
     planet.draw(buffer,slabo_10);
     jed.draw(buffer,slabo_10);
+    blackhole.draw(buffer,slabo_10);
     cookie.draw(buffer,slabo_10);
 
 
@@ -432,6 +435,7 @@ void setup(){
     darkcoin.set_image( "images/darkcoin.png");
     starship.set_image( "images/starship.png");
     planet.set_image( "images/planet.png");
+    blackhole.set_image( "images/blackhole.png");
     jed.set_image( "images/jed.png");
     cookie.set_image( "images/cookie.png");
 
