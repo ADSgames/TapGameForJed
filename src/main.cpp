@@ -202,15 +202,17 @@ item clone(550,240,COINS_PER_CLICK,40000,100,"Jed Clone");
 item powerplant(550,280,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
 item village(550,320,COINS_PER_SECOND,100000,2000,"Village");
 item spacestation(550,360,COINS_PER_SECOND,1250000,3500,"Space Station");
-item planet(550,400,COINS_PER_SECOND,2000000,50000,"Planet");
+item moon(550,400,COINS_PER_SECOND,2000000,50000,"Moon");
 item jedos(550,440,COINS_PER_CLICK,7500000,5000,"JeDOS AI");
 item teleporter(550,480,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
 item magnet(550,520,COINS_PER_CLICK,150000000,25000,"Electromagnetic Coin Magnifier");
 item robot(550,560,COINS_PER_SECOND,500000000,1000000,"Killer Robot");
 item darkcoin(550,600,COINS_PER_SECOND,1000000000,3000000,"Dark Matter Coin");
 item starship(550,640,COINS_PER_SECOND,2500000000,3000000,"Starship Fleet");
-item jedsalt(550,680,COINS_PER_SECOND,10000000000,6500000,"Jed Salt");
-item jed(550,720,COINS_PER_SECOND,10000000000000,1000000000,"Jed");
+item planet(550,680,COINS_PER_SECOND,7500000000,50000,"Distant Inhabitable Planet");
+item jedsalt(550,720,COINS_PER_SECOND,15000000000,6500000,"Jed Salt");
+item jed(550,760,COINS_PER_SECOND,10000000000000,1000000000,"Jed");
+item cookie(550,800,COINS_PER_SECOND,7,0,"Depressed Cookie");
 
 //Update loop handles the whole game's logic.
 void update(){
@@ -226,7 +228,7 @@ void update(){
     powerplant.update();
     village.update();
     spacestation.update();
-    planet.update();
+    moon.update();
     jedos.update();
     teleporter.update();
     magnet.update();
@@ -234,7 +236,9 @@ void update(){
     robot.update();
     darkcoin.update();
     starship.update();
+    planet.update();
     jed.update();
+    cookie.update();
 
     if(jed.amount>0 && !won){
         allegro_message("You win!");
@@ -313,7 +317,7 @@ void draw(){
     powerplant.draw(buffer,slabo_10);
     village.draw(buffer,slabo_10);
     spacestation.draw(buffer,slabo_10);
-    planet.draw(buffer,slabo_10);
+    moon.draw(buffer,slabo_10);
     jedos.draw(buffer,slabo_10);
     teleporter.draw(buffer,slabo_10);
     magnet.draw(buffer,slabo_10);
@@ -321,7 +325,9 @@ void draw(){
     robot.draw(buffer,slabo_10);
     darkcoin.draw(buffer,slabo_10);
     starship.draw(buffer,slabo_10);
+    planet.draw(buffer,slabo_10);
     jed.draw(buffer,slabo_10);
+    cookie.draw(buffer,slabo_10);
 
 
     //Draws the coin if its not clicked.
@@ -416,7 +422,7 @@ void setup(){
     powerplant.set_image( "images/powerplant.png");
     village.set_image( "images/village.png");
     spacestation.set_image( "images/spacestation.png");
-    planet.set_image( "images/planet.png");
+    moon.set_image( "images/moon.png");
     jedos.set_image( "images/jedos.png");
     teleporter.set_image( "images/teleporter.png");
     magnet.set_image( "images/magnet.png");
@@ -425,7 +431,9 @@ void setup(){
     robot.set_image( "images/robot.png");
     darkcoin.set_image( "images/darkcoin.png");
     starship.set_image( "images/starship.png");
+    planet.set_image( "images/planet.png");
     jed.set_image( "images/jed.png");
+    cookie.set_image( "images/cookie.png");
 
     //Load sounds from file
     if( !(sound_click = load_sample("audio/sound_click.wav")))

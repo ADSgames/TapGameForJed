@@ -28,7 +28,7 @@ class item
     BITMAP *image;
     int x;
     int y;
-    unsigned long long value;
+    long long value;
 
     unsigned long long amount;
 
