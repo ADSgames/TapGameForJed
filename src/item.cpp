@@ -11,8 +11,8 @@ item::item(int newX, int newY, bool newType, unsigned long long newPrice, unsign
   value = newValue;
   name = newName;
 }
-void item::addY(int newY){
-    y+=newY;
+int item::getY(){
+    return y;
 }
 //Code from the internet
 std::string item::longThingy(unsigned long long n, char sep = ',') {
@@ -66,30 +66,24 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
 
 }
 
-void item::update(){
+void item::update(int newSlaveY){
+
+    slave_y = newSlaveY;
 
     step++;
     step_scroll++;
 
-    if(mouse_z > old_mouse_z){
+    if(mouse_z > old_mouse_z && slave_y<0){
         y+=40;
     }
-    if(mouse_z < old_mouse_z){
+    if(mouse_z < old_mouse_z && slave_y>-280){
         y-=40;
     }
 
 
     old_mouse_z = mouse_z;
 
-    if(key[KEY_DOWN] && step_scroll>10){
-        y+=40;
-        step_scroll=0;
-    }
 
-     if(key[KEY_UP] && step_scroll>10){
-        y-=40;
-        step_scroll=0;
-    }
     if((name=="Jed" && amount==0)|| name!="Jed" ){
         if(location_clicked(x,x+45,y,y+40) && step>10){
             if(money>=price){

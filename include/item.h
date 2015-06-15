@@ -16,10 +16,9 @@ class item
     void draw(BITMAP* tempBitmap, FONT* newFont);
     virtual ~item();
 
-    void update();
+    void update(int newSlaveY);
 
-    void addY(int newY);
-
+    int getY();
 
     std::string longThingy(unsigned long long n, char sep);
 
@@ -38,6 +37,7 @@ class item
 
     int step;
     int step_scroll;
+    int slave_y;
 
     SAMPLE* sound;
 

@@ -62,6 +62,8 @@ bool close_button_pressed;
 //It is used to prevent rapid clicking when the mouse is held down on the coin.
 bool mouse_pressed;
 
+int slave_y;
+
 //Game variables.
 unsigned long long money = 0;
 unsigned long long money_per_second=0;
@@ -201,7 +203,7 @@ item jmocrop(550,200,COINS_PER_SECOND,35000,300,"Jedetically Modified Crop");
 item clone(550,240,COINS_PER_CLICK,40000,100,"Jed Clone");
 item powerplant(550,280,COINS_PER_SECOND,50000,750,"Nuclear Power Plant");
 item village(550,320,COINS_PER_SECOND,100000,2000,"Village");
-item spacestation(550,360,COINS_PER_SECOND,1250000,3500,"Space Station");
+item spacestation(550,360,COINS_PER_SECOND,1250000,15000,"Space Station");
 item moon(550,400,COINS_PER_SECOND,2000000,50000,"Moon");
 item jedos(550,440,COINS_PER_CLICK,7500000,5000,"JeDOS AI");
 item teleporter(550,480,COINS_PER_SECOND,100000000,500000,"Space Teleporter");
@@ -218,29 +220,31 @@ item cookie(550,840,COINS_PER_SECOND,7,0,"Depressed Cookie");
 //Update loop handles the whole game's logic.
 void update(){
 
+    slave_y = slave.getY();
+
     //Updates each item.
-    slave.update();
-    press.update();
-    workstation.update();
-    mine.update();
-    clone.update();
-    forge.update();
-    jmocrop.update();
-    powerplant.update();
-    village.update();
-    spacestation.update();
-    moon.update();
-    jedos.update();
-    teleporter.update();
-    magnet.update();
-    jedsalt.update();
-    robot.update();
-    darkcoin.update();
-    starship.update();
-    planet.update();
-    blackhole.update();
-    jed.update();
-    cookie.update();
+    slave.update(slave_y);
+    press.update(slave_y);
+    workstation.update(slave_y);
+    mine.update(slave_y);
+    clone.update(slave_y);
+    forge.update(slave_y);
+    jmocrop.update(slave_y);
+    powerplant.update(slave_y);
+    village.update(slave_y);
+    spacestation.update(slave_y);
+    moon.update(slave_y);
+    jedos.update(slave_y);
+    teleporter.update(slave_y);
+    magnet.update(slave_y);
+    jedsalt.update(slave_y);
+    robot.update(slave_y);
+    darkcoin.update(slave_y);
+    starship.update(slave_y);
+    planet.update(slave_y);
+    blackhole.update(slave_y);
+    jed.update(slave_y);
+    cookie.update(slave_y);
 
     if(jed.amount>0 && !won){
         allegro_message("You win!");
@@ -261,11 +265,11 @@ void update(){
     second_timer++;
 
     //Gives me money (cheats).
-    if(key[KEY_I])
-      money+=100000;
+    //if(key[KEY_I])
+    //  money+=100000;
 
-    if(key[KEY_O])
-      money=money*2;
+    //if(key[KEY_O])
+    //  money=money*2;
 
     //Checks if the coin has been clicked, and adds money per click to total money, and creates a money particle.
     if((location_clicked(10,410,190,600) || location_middle_clicked(10,410,190,600) || location_right_clicked(10,410,190,600)) && !mouse_pressed){
