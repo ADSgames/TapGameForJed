@@ -17,7 +17,7 @@
 //Provides routines for graphics and sound.
 #include<allegro.h>
 
-//poop.bike
+//Thing to manipulate strings
 #include<sstream>
 
 //Imports Allegro PNG.
@@ -265,11 +265,11 @@ void update(){
     second_timer++;
 
     //Gives me money (cheats).
-    //if(key[KEY_I])
-    //  money+=100000;
+    if(key[KEY_I])
+     money+=100000;
 
-    //if(key[KEY_O])
-    //  money=money*2;
+    if(key[KEY_O])
+      money=money*2;
 
     //Checks if the coin has been clicked, and adds money per click to total money, and creates a money particle.
     if((location_clicked(10,410,190,600) || location_middle_clicked(10,410,190,600) || location_right_clicked(10,410,190,600)) && !mouse_pressed){
@@ -499,7 +499,6 @@ int main(){
         }
         draw();
     }
-
 
 	return 0;
 }

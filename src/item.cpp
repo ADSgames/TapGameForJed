@@ -1,6 +1,8 @@
 #include "item.h"
 #include "globals.h"
 
+
+//Item contructor
 item::item(int newX, int newY, bool newType, unsigned long long newPrice, unsigned long long newValue, std::string newName)
 {
   sound = load_sample("audio/sound_buy.wav");
@@ -11,10 +13,12 @@ item::item(int newX, int newY, bool newType, unsigned long long newPrice, unsign
   value = newValue;
   name = newName;
 }
+
+//Returns y to main
 int item::getY(){
     return y;
 }
-//Code from the internet
+//Code from the internet to add commas in variables
 std::string item::longThingy(unsigned long long n, char sep = ',') {
     std::stringstream fmt;
     fmt << n;
@@ -33,9 +37,12 @@ std::string item::longThingy(unsigned long long n, char sep = ',') {
     return s;
 }
 
+//Loads image
 void item::set_image(std::string newImage){
   image = load_bitmap( newImage.c_str(), NULL);
 }
+
+//Draws everything
 void item::draw(BITMAP* tempBitmap,FONT* newFont){
 
     rect(tempBitmap,x+45,y,SCREEN_W-1,y+40,makecol(0,0,0));
@@ -66,6 +73,7 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
 
 }
 
+//Runs logic for buying stuff
 void item::update(int newSlaveY){
 
     slave_y = newSlaveY;
@@ -126,7 +134,8 @@ void item::update(int newSlaveY){
 
 }
 
+//Deconstructor
 item::~item()
 {
-  //dtor
+  destroy_bitmap(image);
 }
