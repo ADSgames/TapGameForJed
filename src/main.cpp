@@ -31,9 +31,19 @@
 //Imports vectors, used for the money floating particles when the coin is clicked.
 #include<vector>
 
+//Used for file I/O, for rapidxml
+#include <fstream>
+#include <iostream>
+
 //Attaches these files so it can share variables between item.cpp and main.cpp
 #include "item.h"
 #include "globals.h"
+
+//Imports rapidxml code to load the items
+#include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
+
+//using namespace rapidxml;
 
 //Declares the buffer. Everything is drawn to this bitmap,
 //and this bitmap is drawn to the screen.
@@ -141,6 +151,38 @@ void create_money_particle(int newX, int newY, int newValue){
     money_particle.push_back(newMoneyParticle);
 
 }
+void load_xml(){
+
+    rapidxml::xml_document<> doc;
+    rapidxml::xml_node<> * root_node;
+    // Read the xml file into a vector
+
+
+    std::ifstream theFile("data/items.xml");
+    std::vector<char> xml_buffer((std::istreambuf_iterator<char>(theFile)), std::istreambuf_iterator<char>());
+    xml_buffer.push_back('\0');
+    // Parse the buffer using the xml file parsing library into doc
+    doc.parse<0>(&xml_buffer[0]);
+    // Find our root node
+    root_node = doc.first_node("data");
+
+    //Iterate over the data
+    for (rapidxml::xml_node<> * item_node = root_node->first_node("Item"); item_node; item_node = item_node->next_sibling())
+    {
+
+
+        for(rapidxml::xml_node<> * properties_node = item_node->first_node("Properties"); properties_node; properties_node = properties_node->next_sibling())
+        {
+
+
+
+        }
+
+    }
+
+}
+
+
 
 //Code from the internet
 std::string number_fmt(unsigned long long n, char sep = ',') {
