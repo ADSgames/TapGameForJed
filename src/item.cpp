@@ -2,6 +2,15 @@
 #include "globals.h"
 
 
+inline void abort_on_error(const char *message){
+	 set_window_title("Error!");
+	 if (screen != NULL){
+	    set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
+	 }
+	 allegro_message("%s.\n %s\n", message, allegro_error);
+	 exit(-1);
+}
+
 //Item contructor
 item::item(int newX, int newY, bool newType, unsigned long long newPrice, unsigned long long newValue, std::string newName)
 {
@@ -39,7 +48,10 @@ std::string item::longThingy(unsigned long long n, char sep = ',') {
 
 //Loads image
 void item::set_image(std::string newImage){
-  image = load_bitmap( newImage.c_str(), NULL);
+
+
+  if( !(image = load_bitmap( newImage.c_str(), NULL)))
+      abort_on_error( "Cannot find file audio/sound_click.wav \n Please check your files and try again");
 }
 
 //Draws everything

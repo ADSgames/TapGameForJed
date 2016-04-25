@@ -43,8 +43,6 @@
 #include "rapidxml.hpp"
 #include "rapidxml_print.hpp"
 
-//using namespace rapidxml;
-
 //Declares the buffer. Everything is drawn to this bitmap,
 //and this bitmap is drawn to the screen.
 //Prevents flickering and makes it smooth.
@@ -115,11 +113,13 @@ struct money_particles{
     unsigned long long value;
 };
 
-//A vector of money_particles.
-//Allows for infinite amounts of money particles to be used at once.
-std::vector<money_particles> money_particle;
+template <class newType>
 
-std::vector<item> items;
+newType string_to_number(std::string newString){
+  newType result;
+  std::stringstream(newString) >> result;
+  return result;
+}
 
 std::string longToString(unsigned long long newLong){
     std::stringstream newStringStream;
@@ -128,6 +128,14 @@ std::string longToString(unsigned long long newLong){
     return newResult;
 
 }
+
+//A vector of money_particles.
+//Allows for infinite amounts of money particles to be used at once.
+std::vector<money_particles> money_particle;
+
+std::vector<item> items;
+
+
 
 //Random number generator function.
 //Used for the random location of money particles
@@ -153,7 +161,7 @@ void create_money_particle(int newX, int newY, int newValue){
     money_particle.push_back(newMoneyParticle);
 
 }
-void load_xml(){
+void load_data(){
 
     rapidxml::xml_document<> doc;
     rapidxml::xml_node<> * root_node;
@@ -167,6 +175,7 @@ void load_xml(){
     doc.parse<0>(&xml_buffer[0]);
     // Find our root node
     root_node = doc.first_node("data");
+
     std::string image;
     std::string position;
     std::string type;
@@ -181,8 +190,23 @@ void load_xml(){
         for(rapidxml::xml_node<> * properties_node = item_node->first_node("Properties"); properties_node; properties_node = properties_node->next_sibling())
         {
           image = properties_node->first_attribute("image")->value();
+          position = properties_node->first_attribute("position")->value();
+          type = properties_node->first_attribute("type")->value();
+          price = properties_node->first_attribute("price")->value();
+          value = properties_node->first_attribute("value")->value();
+          name = properties_node->first_attribute("name")->value();
+
+          bool type_bool;
+          if(type=="COINS_PER_SECOND")
+            type_bool = true;
+          else
+            type_bool = false;
 
 
+          item newItem(550,40*string_to_number<int>(position),type_bool,(unsigned long long)string_to_number<unsigned long long>(price),string_to_number<unsigned long long>(value),name);
+          newItem.set_image("images/"+image);
+
+          items.push_back(newItem);
         }
 
     }
@@ -232,7 +256,7 @@ bool location_middle_clicked(int min_x,int max_x,int min_y,int max_y){
 
 //A function to make an error message popup box.
 //Used if an image is not found.
-void abort_on_error(const char *message){
+inline void abort_on_error(const char *message){
 	 set_window_title("Error!");
 	 if (screen != NULL){
 	    set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
@@ -268,6 +292,10 @@ item cookie(550,840,COINS_PER_SECOND,7,0,"Depressed Cookie");
 
 //Update loop handles the whole game's logic.
 void update(){
+
+    for(int i=0; i<items.size(); i++){
+      items[i].update(slave_y);
+    }
 
     slave_y = slave.getY();
 
@@ -353,6 +381,11 @@ void draw(){
     //White background.
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
 
+    for(int i=0; i<items.size(); i++){
+      items[i].draw(buffer,slabo_10);
+    }
+
+
 
     //Prints stats to the screen.
     //number_fmt(money);
@@ -413,6 +446,10 @@ void draw(){
 //Setup function runs once, when the program starts.
 //Handles loading images and fonts.
 void setup(){
+
+    for(int i=0; i<items.size(); i++){
+
+    }
 
     buffer=create_bitmap(SCREEN_W,SCREEN_H);
 
@@ -521,6 +558,8 @@ int main(){
     install_sound(DIGI_AUTODETECT,MIDI_AUTODETECT,".");
 
     set_window_title("Jed Clicker");
+
+    load_data();
 
     //Sets up the game.
     setup();

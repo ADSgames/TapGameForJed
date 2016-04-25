@@ -10,10 +10,10 @@ std::string longToString(unsigned long long newLong);
 
 bool location_clicked(int min_x,int max_x,int min_y,int max_y);
 
-//std::string number_fmt(unsigned long long n, char sep = ',');
-
 bool location_right_clicked(int min_x,int max_x,int min_y,int max_y);
 
 bool location_middle_clicked(int min_x,int max_x,int min_y,int max_y);
+
+inline void abort_on_error(const char* message);
 
 #endif
