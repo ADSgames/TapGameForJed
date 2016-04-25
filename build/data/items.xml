@@ -2,7 +2,7 @@
 <data>
   
   <Item>
-	<Properties image = "slave.png">
+	<Properties image = "slave.png" position = "1" type = "COINS_PER_SECOND" price = "100" value = "2" name = "JedCoin Press">
 	</Properties>
 
   </Item>

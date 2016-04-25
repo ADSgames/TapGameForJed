@@ -119,6 +119,8 @@ struct money_particles{
 //Allows for infinite amounts of money particles to be used at once.
 std::vector<money_particles> money_particle;
 
+std::vector<item> items;
+
 std::string longToString(unsigned long long newLong){
     std::stringstream newStringStream;
     newStringStream << newLong;
@@ -165,15 +167,20 @@ void load_xml(){
     doc.parse<0>(&xml_buffer[0]);
     // Find our root node
     root_node = doc.first_node("data");
+    std::string image;
+    std::string position;
+    std::string type;
+    std::string price;
+    std::string value;
+    std::string name;
 
     //Iterate over the data
     for (rapidxml::xml_node<> * item_node = root_node->first_node("Item"); item_node; item_node = item_node->next_sibling())
     {
 
-
         for(rapidxml::xml_node<> * properties_node = item_node->first_node("Properties"); properties_node; properties_node = properties_node->next_sibling())
         {
-
+          image = properties_node->first_attribute("image")->value();
 
 
         }
@@ -237,7 +244,7 @@ void abort_on_error(const char *message){
 //Creates an item based on the item class
 //The arguments are x position, y position, money type, initial cost, amount of money received, and name.
 item slave(550,0,COINS_PER_SECOND,100,2,"Slave");
-item press(550,40,COINS_PER_CLICK,100,2,"JedCoin Press");
+//item press(550,40,COINS_PER_CLICK,100,2,"JedCoin Press");
 item workstation(550,80,COINS_PER_SECOND,750,10,"Workstation");
 item mine(550,120,COINS_PER_SECOND,2000,25,"JedCoin Mine");
 item forge(550,160,COINS_PER_SECOND,20000,100,"JedCoin Forge");
@@ -266,7 +273,7 @@ void update(){
 
     //Updates each item.
     slave.update(slave_y);
-    press.update(slave_y);
+    //press.update(slave_y);
     workstation.update(slave_y);
     mine.update(slave_y);
     clone.update(slave_y);
@@ -356,7 +363,7 @@ void draw(){
 
     //Draws all the items.
     slave.draw(buffer,slabo_10);
-    press.draw(buffer,slabo_10);
+    //press.draw(buffer,slabo_10);
     workstation.draw(buffer,slabo_10);
     mine.draw(buffer,slabo_10);
     clone.draw(buffer,slabo_10);
@@ -466,7 +473,7 @@ void setup(){
     workstation.set_image( "images/workstation.png");
     mine.set_image( "images/mine.png");
     clone.set_image( "images/jedclone.png");
-    press.set_image( "images/press.png");
+    //press.set_image( "images/press.png");
     forge.set_image( "images/forge.png");
     powerplant.set_image( "images/powerplant.png");
     village.set_image( "images/village.png");
