@@ -1,15 +1,7 @@
 #include "item.h"
 #include "globals.h"
 
-
-inline void abort_on_error(const char *message){
-	 set_window_title("Error!");
-	 if (screen != NULL){
-	    set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-	 }
-	 allegro_message("%s.\n %s\n", message, allegro_error);
-	 exit(-1);
-}
+#include <loadpng.h>
 
 //Item contructor
 item::item(int newX, int newY, bool newType, unsigned long long newPrice, unsigned long long newValue, std::string newName)
@@ -39,7 +31,7 @@ std::string item::longThingy(unsigned long long n, char sep = ',') {
     // third loop starting taking into account the leading x digits (this probably
     // can be rewritten in terms of just i, but it seems more clear when you use
     // a seperate variable)
-    for (int i = 0, j = 3 - s.length() % 3; i < s.length(); ++i, ++j)
+    for (unsigned int i = 0, j = 3 - s.length() % 3; i < s.length(); ++i, ++j)
         if (i != 0 && j % 3 == 0)
             s.insert(i++, 1, sep);
 
@@ -50,7 +42,7 @@ std::string item::longThingy(unsigned long long n, char sep = ',') {
 void item::set_image(std::string newImage){
 
 
-  if( !(image = load_bitmap( newImage.c_str(), NULL)))
+  if( !(image = load_png( newImage.c_str(), NULL)))
       abort_on_error( "Cannot find file audio/sound_click.wav \n Please check your files and try again");
 }
 
@@ -75,12 +67,12 @@ void item::draw(BITMAP* tempBitmap,FONT* newFont){
 
     if(type==COINS_PER_CLICK)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(200,0,0), -1, "%s JC/C",longThingy(value).c_str());
     if(type==COINS_PER_SECOND)textprintf_right_ex( tempBitmap, newFont, SCREEN_W-5,y, makecol(0,100,0), -1, "%s JC/S",longThingy(value).c_str());
-
-    for( int i = 0; i <amount; i++){
+ 
+    for( unsigned int i = 0; i <amount; i++){
          draw_sprite(tempBitmap,image,x+50+(i*25),y+15);
     }
 
-    textprintf_ex( tempBitmap, newFont, x+50,y, makecol(0,0,0), -1, "%ss: %i" ,name.c_str(),amount);
+    textprintf_ex( tempBitmap, newFont, x+50,y, makecol(0,0,0), -1, "%ss: %lu",name.c_str(),amount);
 
 
 }

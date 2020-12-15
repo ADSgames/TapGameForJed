@@ -8,7 +8,7 @@
                             __/ |                                              | |
                            |___/                                               |_|
 
-  ©2015 A.D.S. Games
+  ï¿½2015 A.D.S. Games
   adsgames.net
 
 */
@@ -17,12 +17,9 @@
 //Provides routines for graphics and sound.
 #include<allegro.h>
 
-//Thing to manipulate strings
-#include<sstream>
-
 //Imports Allegro PNG.
 //An extension of Allegro to import .png files.
-#include<alpng.h>
+#include<loadpng.h>
 
 //Imports Windows time routines.
 //Used to seed the random number generator based on system clock.
@@ -40,8 +37,8 @@
 #include "globals.h"
 
 //Imports rapidxml code to load the items
-#include "rapidxml.hpp"
-#include "rapidxml_print.hpp"
+#include "rapidxml/rapidxml.hpp"
+#include "rapidxml/rapidxml_print.hpp"
 
 //Declares the buffer. Everything is drawn to this bitmap,
 //and this bitmap is drawn to the screen.
@@ -73,9 +70,6 @@ bool mouse_pressed;
 int slave_y;
 
 //Game variables.
-unsigned long long money = 0;
-unsigned long long money_per_second=0;
-unsigned long long money_per_click=1;
 int second_timer;
 int click;
 
@@ -121,13 +115,7 @@ newType string_to_number(std::string newString){
   return result;
 }
 
-std::string longToString(unsigned long long newLong){
-    std::stringstream newStringStream;
-    newStringStream << newLong;
-    std::string newResult = newStringStream.str();
-    return newResult;
 
-}
 
 //A vector of money_particles.
 //Allows for infinite amounts of money particles to be used at once.
@@ -226,49 +214,17 @@ std::string number_fmt(unsigned long long n, char sep = ',') {
     // third loop starting taking into account the leading x digits (this probably
     // can be rewritten in terms of just i, but it seems more clear when you use
     // a seperate variable)
-    for (int i = 0, j = 3 - s.length() % 3; i < s.length(); ++i, ++j)
+    for (unsigned int i = 0, j = 3 - s.length() % 3; i < s.length(); ++i, ++j)
         if (i != 0 && j % 3 == 0)
             s.insert(i++, 1, sep);
 
     return s;
 }
 
-//Function to see if a rectangular area has been clicked.
-//Used in the coin and by the item boxes.
-bool location_clicked(int min_x,int max_x,int min_y,int max_y){
-    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && mouse_b & 1)
-        return true;
-    else return false;
-}
-
-bool location_right_clicked(int min_x,int max_x,int min_y,int max_y){
-    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && mouse_b & 2)
-        return true;
-    else return false;
-}
-
-bool location_middle_clicked(int min_x,int max_x,int min_y,int max_y){
-    if(mouse_x>min_x && mouse_x<max_x && mouse_y>min_y && mouse_y<max_y && mouse_b & 4)
-        return true;
-    else return false;
-}
-
-
-//A function to make an error message popup box.
-//Used if an image is not found.
-inline void abort_on_error(const char *message){
-	 set_window_title("Error!");
-	 if (screen != NULL){
-	    set_gfx_mode(GFX_TEXT, 0, 0, 0, 0);
-	 }
-	 allegro_message("%s.\n %s\n", message, allegro_error);
-	 exit(-1);
-}
-
 //Creates an item based on the item class
 //The arguments are x position, y position, money type, initial cost, amount of money received, and name.
 item slave(550,0,COINS_PER_SECOND,100,2,"Slave");
-//item press(550,40,COINS_PER_CLICK,100,2,"JedCoin Press");
+item press(550,40,COINS_PER_CLICK,100,2,"JedCoin Press");
 item workstation(550,80,COINS_PER_SECOND,750,10,"Workstation");
 item mine(550,120,COINS_PER_SECOND,2000,25,"JedCoin Mine");
 item forge(550,160,COINS_PER_SECOND,20000,100,"JedCoin Forge");
@@ -293,7 +249,7 @@ item cookie(550,840,COINS_PER_SECOND,7,0,"Depressed Cookie");
 //Update loop handles the whole game's logic.
 void update(){
 
-    for(int i=0; i<items.size(); i++){
+    for(unsigned int i=0; i<items.size(); i++){
       items[i].update(slave_y);
     }
 
@@ -301,7 +257,7 @@ void update(){
 
     //Updates each item.
     slave.update(slave_y);
-    //press.update(slave_y);
+    press.update(slave_y);
     workstation.update(slave_y);
     mine.update(slave_y);
     clone.update(slave_y);
@@ -329,7 +285,7 @@ void update(){
     }
 
     //Iterates through the vector stack and moves them, and if they are off the screen, delete them.
-    for( int i = 0; i <money_particle.size(); i++){
+    for( unsigned int i = 0; i <money_particle.size(); i++){
         money_particle[i].y--;
         if(money_particle[i].y<0){
             money_particle.erase(money_particle.begin()+i);
@@ -381,7 +337,7 @@ void draw(){
     //White background.
     rectfill(buffer,0,0,SCREEN_W,SCREEN_H,makecol(255,255,255));
 
-    for(int i=0; i<items.size(); i++){
+    for(unsigned int i=0; i<items.size(); i++){
       items[i].draw(buffer,slabo_10);
     }
 
@@ -396,7 +352,7 @@ void draw(){
 
     //Draws all the items.
     slave.draw(buffer,slabo_10);
-    //press.draw(buffer,slabo_10);
+    press.draw(buffer,slabo_10);
     workstation.draw(buffer,slabo_10);
     mine.draw(buffer,slabo_10);
     clone.draw(buffer,slabo_10);
@@ -427,7 +383,7 @@ void draw(){
 
     //Iterate through all the money particles in the vector and draws each.
 
-    for( int i = 0; i <money_particle.size(); i++){
+    for(unsigned int i = 0; i <money_particle.size(); i++){
         textprintf_ex( buffer, slabo_10, money_particle[i].x,money_particle[i].y, makecol(0,100,0), -1, "$%s",number_fmt(money_particle[i].value).c_str());
     }
 
@@ -447,7 +403,7 @@ void draw(){
 //Handles loading images and fonts.
 void setup(){
 
-    for(int i=0; i<items.size(); i++){
+    for(unsigned int i=0; i<items.size(); i++){
 
     }
 
@@ -499,10 +455,10 @@ void setup(){
     set_display_switch_mode(SWITCH_BACKGROUND);
 
     //Load the two images from file.
-    if (!(coin = load_bitmap("images/coin.png", NULL)))
+    if (!(coin = load_png("images/coin.png", NULL)))
      abort_on_error("Cannot find image images/coin.png\nPlease check your files and try again");
 
-    if (!(cursor = load_bitmap("images/cursor.png", NULL)))
+    if (!(cursor = load_png("images/cursor.png", NULL)))
      abort_on_error("Cannot find image images/cursor.png\nPlease check your files and try again");
 
     //Load item images from file.
@@ -510,7 +466,7 @@ void setup(){
     workstation.set_image( "images/workstation.png");
     mine.set_image( "images/mine.png");
     clone.set_image( "images/jedclone.png");
-    //press.set_image( "images/press.png");
+    press.set_image( "images/press.png");
     forge.set_image( "images/forge.png");
     powerplant.set_image( "images/powerplant.png");
     village.set_image( "images/village.png");
@@ -542,9 +498,6 @@ int main(){
     //Initialize Allegro library.
     allegro_init();
 
-    //Initialize Allegro PNG.
-    alpng_init();
-
     //Install hardware.
     install_timer();
     install_keyboard();
@@ -559,7 +512,7 @@ int main(){
 
     set_window_title("Jed Clicker");
 
-    load_data();
+    // load_data();
 
     //Sets up the game.
     setup();

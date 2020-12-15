@@ -1,8 +1,8 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#define COINS_PER_SECOND TRUE
-#define COINS_PER_CLICK FALSE
+#define COINS_PER_SECOND true
+#define COINS_PER_CLICK false
 
 #include <string>
 #include <sstream>
